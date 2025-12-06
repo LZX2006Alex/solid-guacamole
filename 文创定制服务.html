@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>甲骨文文创定制服务</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SimSun', 'STKaiti', serif;
+        }
+        
+        body {
+            background: #f5f1e6;
+            color: #3a3225;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, #8a7355 0%, #7a5c3c 100%);
+            color: #f5f1e6;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-right: 15px;
+            color: #d4c6b0;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 25px;
+        }
+        
+        nav a {
+            color: #f5f1e6;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: #d4c6b0;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #d4c6b0;
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .cart-icon {
+            position: relative;
+            font-size: 1.3rem;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #d4a5a5;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+         /* Banner样式 */
+        .banner {
+            background: linear-gradient(rgba(122, 92, 60, 0.8), rgba(122, 92, 60, 0.8)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z" fill="%23d4c6b0" fill-opacity="0.2"/></svg>');
+            color: #f5f1e6;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .banner h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .banner p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #d4c6b0;
+            color: #5d4c35;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        
+        .btn:hover {
+            background: #c5b59a;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background: #8a7355;
+            color: #f5f1e6;
+        }
+        
+        .btn-primary:hover {
+            background: #7a5c3c;
+        }
+        
+        /* 产品展示区 */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #7a5c3c;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background: #8a7355;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        } .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-img {
+            height: 200px;
+            background: #e8dfd1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .product-oracle {
+            font-size: 4rem;
+            color: #5d4c35;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #5d4c35;
+        }
+        
+        .product-info p {
+            color: #8a7355;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .product-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #7a5c3c;
+        }
+        
+        /* 定制区域 */
+        .customization {
+            background: #e8dfd1;
+            padding: 60px 0;
+            margin-bottom: 80px;
+            border-radius: 15px;
+        }
+        
+        .customization-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .custom-preview {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .preview-item {
+            width: 250px;
+            height: 250px;
+            background: #f5f1e6;
+            border: 2px dashed #a99275;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .preview-oracle {
+            font-size: 5rem;
+            color: #5d4c35;
+        }
+        
+        .custom-controls {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .control-group {
+            margin-bottom: 25px;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #5d4c35;
+        }
+        
+        .control-group input, .control-group select, .control-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #a99275;
+            border-radius: 5px;
+            background: #f9f3e9;
+            font-size: 1rem;
+        }
+        
+        .color-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .color-option.active {
+            border-color: #5d4c35;
+        }
+        
+        .oracle-characters {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .oracle-char {
+            background: #d4c6b0;
+            border-radius: 5px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .oracle-char:hover {
+            background: #c5b59a;
+        }
+        
+        .oracle-char.active {
+            background: #8a7355;
+            color: white;
+        }
+        
+        /* 购物车 */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 380px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .cart-modal.active {
+            right: 0;
+        }
+        
+        .cart-header {
+            padding: 20px;
+            background: #8a7355;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .cart-items {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .cart-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e8dfd1;
+        }
+        
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            background: #e8dfd1;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        .cart-item-info {
+            flex: 1;
+        }
+        
+        .cart-item-info h4 {
+            margin-bottom: 5px;
+            color: #5d4c35;
+        }
+        
+        .cart-item-info p {
+            color: #8a7355;
+            font-size: 0.9rem;
+        }
+        
+        .cart-item-price {
+            font-weight: bold;
+            color: #7a5c3c;
+        }
+        
+        .cart-footer {
+            padding: 20px;
+            border-top: 1px solid #e8dfd1;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #5d4c35;
+        }  /* 页脚 */
+        footer {
+            background: #5d4c35;
+            color: #d4c6b0;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-column h3 {
+            color: #f5f1e6;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #d4c6b0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #f5f1e6;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #8a7355;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0 10px;
+            }
+            
+            .banner h1 {
+                font-size: 2.2rem;
+            }
+            
+            .customization-container {
+                flex-direction: column;
+            }
+            
+            .oracle-characters {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .cart-modal {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    <div>
+                        <div class="logo-text">甲骨文文创</div>
+                        <div class="logo-subtitle">让古老文字融入现代生活</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href=" ">产品展示</a ></li>
+                        <li><a href="#customization">个性定制</a ></li>
+                        <li>
+                            <a href="#" class="cart-icon" id="cart-toggle">
+                                🛒 <span class="cart-count">0</span>
+                            </a >
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Banner -->
+    <section class="banner">
+        <div class="container">
+            <h1>甲骨文文创定制服务</h1>
+            <p>将三千年前的古老文字，融入现代生活用品，创造独具文化气息的个性文创产品</p >
+            <a href="#customization" class="btn btn-primary">立即定制</a >
+        </div>
+    </section>
+
+    <!-- 产品展示 -->
+    <section class="container" id="products">
+        <div class="section-title">
+            <h2>热门文创产品</h2>
+        </div>
+        <div class="products">
+
+
+<div class="product-card">
+                <div class="product-img">
+                    <div class="product-oracle">𓆏</div>
+                </div>
+                <div class="product-info">
+                    <h3>甲骨文T恤</h3>
+                    <p>纯棉材质，舒适透气，印有精美甲骨文字符</p >
+                    <div class="product-price">
+                        <div class="price">¥129</div>
+                        <button class="btn">加入购物车</button>
+                    </div>
+                </div>
+            </div>
+
+            
+
+
+            <div class="product-card">
+                <div class="product-img">
+                    <div class="product-oracle">𓍯</div>
+                </div>
+                <div class="product-info">
+                    <h3>甲骨文马克杯</h3>
+                    <p>陶瓷材质，手感舒适，甲骨文字彰显文化底蕴</p >
+                    <div class="product-price">
+                        <div class="price">¥89</div>
+                        <button class="btn">加入购物车</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+<div class="product-card">
+                <div class="product-img">
+                    <div class="product-oracle">𓂀</div>
+                </div>
+                <div class="product-info">
+                    <h3>甲骨文笔记本</h3>
+                    <p>优质纸张，精美装帧，记录灵感与思考</p >
+                    <div class="product-price">
+                        <div class="price">¥59</div>
+                        <button class="btn">加入购物车</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="product-card">
+                <div class="product-img">
+                    <div class="product-oracle">𓃻</div>
+                </div>
+                <div class="product-info">
+                    <h3>甲骨文帆布包</h3>
+                    <p>环保材质，大容量设计，日常出行首选</p >
+                    <div class="product-price">
+                        <div class="price">¥79</div>
+                        <button class="btn">加入购物车</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 定制区域 -->
+    <section class="customization" id="customization">
+        <div class="container">
+            <div class="section-title">
+                <h2>个性定制</h2>
+            </div>
+            <div class="customization-container">
+                <div class="custom-preview">
+                    <div class="preview-item">
+                        <div class="preview-oracle" id="preview-oracle">𓃒</div>
+                    </div>
+                    <p>定制效果预览</p >
+                </div>
+                <div class="custom-controls">
+                    <div class="control-group">
+                        <label for="product-type">选择产品</label>
+                        <select id="product-type">
+                            <option value="t-shirt">T恤</option>
+                            <option value="mug">马克杯</option>
+                            <option value="notebook">笔记本</option>
+                            <option value="bag">帆布包</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>选择甲骨文字符</label>
+                        <div class="oracle-characters">
+                            <div class="oracle-char active">𓃒</div>
+                            <div class="oracle-char">𓆏</div>
+                            <div class="oracle-char">𓍯</div>
+                            <div class="oracle-char">𓂀</div>
+                            <div class="oracle-char">𓃻</div>
+                            <div class="oracle-char">𓁛</div>
+                                  <div class="oracle-char">𓂧</div>
+                            <div class="oracle-char">𓅓</div>
+                            <div class="oracle-char">𓆑</div>
+                            <div class="oracle-char">𓇋</div>
+                            <div class="oracle-char">𓈖</div>
+                            <div class="oracle-char">𓉐</div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="custom-text">自定义文字</label>
+                        <input type="text" id="custom-text" placeholder="输入要添加的文字">
+                    </div>
+                    <div class="control-group">
+                        <label>选择颜色</label>
+                        <div class="color-options">
+                            <div class="color-option active" style="background-color: #de1425;"></div>
+                            <div class="color-option" style="background-color: #c8c1b8;"></div>
+                            <div class="color-option" style="background-color: #84631c;"></div>
+                            <div class="color-option" style="background-color: #23821e;"></div>
+                            <div class="color-option" style="background-color: #3e37a3;"></div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="custom-note">定制备注</label>
+                        <textarea id="custom-note" rows="3" placeholder="如有特殊要求，请在此备注"></textarea>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;">加入购物车</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 购物车 -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-header">
+            <h3>购物车</h3>
+            <button class="cart-close" id="cart-close">×</button>
+        </div>
+        <div class="cart-items">
+            <!-- 购物车内容将通过JavaScript动态生成 -->
+            <div class="empty-cart" style="text-align: center; padding: 40px 0; color: #8a7355;">
+                购物车为空
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>总计:</span>
+                <span>¥0</span>
+            </div>
+            <button class="btn btn-primary" style="width: 100%;">立即结算</button>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <p>我们致力于将中国传统文化与现代设计相结合，创造独具特色的文创产品，让古老的甲骨文在现代生活中焕发新的生机。</p >
+                                  <p>&copy;  2025 甲骨文创意学习与文创平台 版权所有</p >
+                </div>
+            
+        </div>
+    </footer><script>
+        // 购物车功能
+        const cartToggle = document.getElementById('cart-toggle');
+        const cartModal = document.getElementById('cart-modal');
+        const cartClose = document.getElementById('cart-close');
+        const cartCount = document.querySelector('.cart-count');
+        
+        cartToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            cartModal.classList.add('active');
+        });
+        
+        cartClose.addEventListener('click', function() {
+            cartModal.classList.remove('active');
+        });
+        
+        // 甲骨文字符选择
+        const oracleChars = document.querySelectorAll('.oracle-char');
+        const previewOracle = document.getElementById('preview-oracle');
+        
+        oracleChars.forEach(char => {
+            char.addEventListener('click', function() {
+                oracleChars.forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                previewOracle.textContent = this.textContent;
+            });
+        });
+        
+        // 颜色选择
+        const colorOptions = document.querySelectorAll('.color-option');
+        
+        colorOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                colorOptions.forEach(o => o.classList.remove('active'));
+                this.classList.add('active');
+                previewOracle.style.color = this.style.backgroundColor;
+            });
+        });
+        
+        // 添加产品到购物车
+        const addToCartButtons = document.querySelectorAll('.product-card .btn');
+        const customAddToCart = document.querySelector('.custom-controls .btn');
+        
+        let cartItems = [];
+        let cartTotal = 0;
+        
+        function updateCart() {
+            cartCount.textContent = cartItems.length;
+            
+            const cartItemsContainer = document.querySelector('.cart-items');
+            const cartTotalElement = document.querySelector('.cart-total span:last-child');
+            
+            if (cartItems.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="empty-cart" style="text-align: center; padding: 40px 0; color: #8a7355;">购物车为空</div>';
+                cartTotalElement.textContent = '¥0';
+                return;
+            }
+            
+            cartItemsContainer.innerHTML = '';
+            cartTotal = 0;
+            
+            cartItems.forEach((item, index) => {
+                cartTotal += item.price;
+                
+                const cartItemElement = document.createElement('div');
+                cartItemElement.className = 'cart-item';
+                cartItemElement.innerHTML = `
+                    <div class="cart-item-img">
+                        <div style="font-size: 2rem;">${item.oracleChar}</div>
+                    </div>
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <p>${item.customText ? '文字: ' + item.customText : ''}</p >
+                        <div class="cart-item-price">¥${item.price}</div>
+                    </div>
+                `;
+                
+                cartItemsContainer.appendChild(cartItemElement);
+            });
+            
+            cartTotalElement.textContent = `¥${cartTotal}`;
+        }
+        
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productCard = this.closest('.product-card');
+                const productName = productCard.querySelector('h3').textContent;
+                const productPrice = parseInt(productCard.querySelector('.price').textContent.replace('¥', ''));
+                const oracleChar = productCard.querySelector('.product-oracle').textContent;
+                
+                cartItems.push({
+                    name: productName,
+                    price: productPrice,
+                    oracleChar: oracleChar
+                });
+                
+                updateCart();
+                
+                // 显示添加成功提示
+                alert(`已成功将 ${productName} 添加到购物车`);
+            });
+        });customAddToCart.addEventListener('click', function() {
+            const productType = document.getElementById('product-type');
+            const selectedProduct = productType.options[productType.selectedIndex].text;
+            const oracleChar = document.querySelector('.oracle-char.active').textContent;
+            const customText = document.getElementById('custom-text').value;
+            
+            // 根据产品类型设置价格
+            let price = 0;
+            switch(productType.value) {
+                case 't-shirt':
+                    price = 129;
+                    break;
+                case 'mug':
+                    price = 89;
+                    break;
+                case 'notebook':
+                    price = 59;
+                    break;
+                case 'bag':
+                    price = 79;
+                    break;
+            }
+            
+            // 如果有自定义文字，增加费用
+            if (customText) {
+                price += 20;
+            }
+            
+            cartItems.push({
+                name: `定制${selectedProduct}`,
+                price: price,
+                oracleChar: oracleChar,
+                customText: customText
+            });
+            
+            updateCart();
+            
+            // 显示添加成功提示
+            alert(`已成功将定制${selectedProduct}添加到购物车`);
+        });
+        
+        // 初始化
+        updateCart();
+    </script>
+</body>
+</html>

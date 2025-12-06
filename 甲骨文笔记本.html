@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>甲骨文文创 - 文化传承与创新</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "SimSun", serif;
+        }
+        
+        body {
+            background-color: #f5f1e8;
+            color: #3c2f2f;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(to right, #8B4513, #A0522D);
+            color: #f5f1e8;
+            padding: 30px 0;
+            text-align: center;
+            border-bottom: 5px solid #5D4037;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><text x="10" y="50" font-family="SimSun" font-size="30" fill="rgba(255,255,255,0.1)">文</text></svg>');
+            opacity: 0.3;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 5px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            font-style: italic;
+            opacity: 0.9;
+        }
+        
+        .product-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .product-image {
+            flex: 1;
+            min-width: 300px;
+            background-color: #e8dfca;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .product-img {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            background-color: #d4b896;
+            border: 2px solid #8B4513;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: #5D4037;
+        }
+        
+        .product-details {
+            flex: 1;
+            min-width: 300px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+         .product-title {
+            font-size: 1.8rem;
+            color: #8B4513;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #d4b896;
+            padding-bottom: 10px;
+        }
+        
+        .product-description {
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .price {
+            font-size: 2rem;
+            color: #c62828;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        .order-form {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
+        }
+        
+        .form-title {
+            font-size: 1.5rem;
+            color: #8B4513;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #d4b896;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #5D4037;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d4b896;
+            border-radius: 4px;
+            font-size: 1rem;
+            background-color: #f9f5f0;
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            background-color: #8B4513;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quantity-input {
+            width: 80px;
+            text-align: center;
+        }
+        
+        .submit-btn {
+            background-color: #8B4513;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #5D4037;
+        }
+        
+        footer {
+            background-color: #5D4037;
+            color: #f5f1e8;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        
+        .oracle-pattern {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><text x="10" y="50" font-family="SimSun" font-size="30" fill="rgba(93,64,55,0.1)">甲</text></svg>');
+            height: 100px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .product-showcase {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>甲骨文文创</h1>
+            <p class="subtitle">传承千年文化 · 创新现代生活</p >
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="product-showcase">
+            <div class="product-image">
+                <div class="product-img">
+                    <img src="./笔记本.jpg" alt="甲骨文笔记本"height="300px" width="400px">
+                </div>
+                <div class="product-gallery">
+                    <p>更多产品图片</p >
+                    <!-- 这里可以添加缩略图 -->
+                </div>
+            </div>
+            <div class="product-details">
+  <h2 class="product-title">甲骨文笔记本</h2>
+  <p class="product-description">
+    这款甲骨文笔记本以商周时期甲骨文为灵感，将古老的文字艺术与现代书写体验完美结合。采用优质纸张与环保材料，结合传统工艺与现代设计，既保留了甲骨文的古朴韵味，又融入了现代审美元素，是学习、办公、收藏或赠送亲友的绝佳选择。
+  </p >
+  <div class="price">¥48.00</div>
+
+  <div class="features">
+    <h3>产品特色</h3>
+    <ul>
+      <li>封面印有高精度甲骨文图案，还原古老文字的独特魅力</li>
+      <li>内页采用护眼纸张，书写流畅，适合长时间记录</li>
+      <li>每本附赠甲骨文知识手册，深入了解文字背后的文化故事</li>
+      <li>精美礼盒包装，是自用和送礼的佳品</li>
+    </ul>
+  </div>
+</div>
+        </div>
+        
+        <div class="oracle-pattern"></div>
+        
+        <div class="order-form">
+            <h2 class="form-title">立即订购</h2>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="name">收货人姓名</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">联系电话</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">收货地址</label>
+                    <textarea id="address" name="address" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantity">购买数量</label>
+                    <div class="quantity-selector">
+                        <button type="button" class="quantity-btn" id="decrease">-</button>
+                        <input type="number" id="quantity" name="quantity" value="1" min="1" max="10" class="quantity-input">
+                        <button type="button" class="quantity-btn" id="increase">+</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gift">包装选项</label>
+                    <select id="gift" name="gift">
+                        <option value="standard">标准包装</option>
+                        <option value="premium">精美礼盒包装 (+￥20)</option>
+                        <option value="luxury">豪华收藏包装 (+￥50)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">留言备注</label>
+                    <textarea id="message" name="message" rows="3" placeholder="如有特殊要求，请在此备注"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">提交订单</button>
+            </form>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>甲骨文文创 &copy; 2025 - 传承中华文明，创新文化表达</p >
+            <p>客服热线：19737202239 邮箱：3894381.com</p >
+        </div>
+    </footer>
+
+    <script>
+        // 数量选择功能
+        document.getElementById('decrease').addEventListener('click', function() {
+            const quantityInput = document.getElementById('quantity');
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+            }
+        });
+        
+        document.getElementById('increase').addEventListener('click', function() {
+            const quantityInput = document.getElementById('quantity');
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue < 10) {
+                quantityInput.value = currentValue + 1;
+            }
+        });
+        // 表单提交处理
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const quantity = document.getElementById('quantity').value;
+            
+            alert(`感谢 ${name} 的订购！\n我们已收到您 ${quantity} 件商品的订单，稍后将通过电话 ${phone} 与您确认订单详情。`);
+            
+            // 在实际应用中，这里会发送数据到服务器
+            // 重置表单
+            document.getElementById('orderForm').reset();
+            document.getElementById('quantity').value = 1;
+        });
+    </script>
+</body>
+</html>

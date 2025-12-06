@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>甲骨文猜字游戏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f2e9;
+            color: #5c3d2e;
+            padding: 20px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><rect fill="%235c3d2e" width="100" height="100"/></svg>');
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #fff9e6;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(92, 61, 46, 0.2);
+            padding: 25px;
+            border: 2px solid #d9c7a7;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed #d9c7a7;
+        }
+        
+        h1 {
+            color: #8b4513;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            background-color: #e8d8b8;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .game-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .oracle-bone {
+            flex: 1;
+            min-width: 300px;
+            background-color: #f0e6d2;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: inset 0 0 10px rgba(92, 61, 46, 0.1);
+            border: 1px solid #d9c7a7;
+        }
+        
+        .oracle-character {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            position: relative;
+        } .options {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .option {
+            background-color: #e8d8b8;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .option:hover {
+            background-color: #d9c7a7;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .option.correct {
+            background-color: #a8d5a2;
+            border-color: #5a9e5a;
+        }
+        
+        .option.incorrect {
+            background-color: #e8a8a8;
+            border-color: #b85c5c;
+        }
+        
+        .feedback {
+            text-align: center;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            background-color: #8b4513;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        } button:hover {
+            background-color: #a0522d;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .instructions {
+            background-color: #f0e6d2;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border-left: 5px solid #8b4513;
+        }
+        
+        .instructions h2 {
+            margin-bottom: 10px;
+            color: #8b4513;
+        }
+        
+        .instructions p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        /* 甲骨文图形样式 */
+        .oracle-human {
+            width: 80px;
+            height: 100px;
+            position: relative;
+        }
+        
+        .oracle-human::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 35px;
+            width: 10px;
+            height: 40px;
+            background: #5c3d2e;
+            border-radius: 5px;
+        }
+        
+        .oracle-human::after {
+            content: "";
+            position: absolute;
+            top: 50px;
+            left: 20px;
+            width: 40px;
+            height: 50px;
+            border: 5px solid #5c3d2e;
+            border-top: none;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .oracle-tree {
+            width: 80px;
+            height: 100px;
+            position: relative;
+        }
+        
+        .oracle-tree::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 35px;
+            width: 10px;
+            height: 80px;
+            background: #5c3d2e;
+            border-radius: 5px;
+        }
+        
+        .oracle-tree::after {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 50px;
+            height: 30px;
+            border: 5px solid #5c3d2e;
+            border-bottom: none;
+            border-radius: 25px 25px 0 0;
+        }
+        
+        .oracle-sun {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+        
+        .oracle-sun::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 60px;
+            height: 60px;
+            border: 5px solid #5c3d2e;
+            border-radius: 50%;
+        }
+        
+        .oracle-sun::after {
+            content: "";
+            position: absolute;
+            top: 30px;
+            left: 0;
+            width: 80px;
+            height: 5px;
+            background: #5c3d2e;
+        }
+        
+        .oracle-moon {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+        
+        .oracle-moon::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            width: 40px;
+            height: 60px;
+            border: 5px solid #5c3d2e;
+            border-radius: 50%;
+        }
+        
+        .oracle-moon::after {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 60px;
+            background: #f5f2e9;
+            border-radius: 50%;
+        }
+        
+        .oracle-water {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+        
+        .oracle-water::before,
+        .oracle-water::after {
+            content: "";
+            position: absolute;
+            width: 60px;
+            height: 5px;
+            background: #5c3d2e;
+            border-radius: 5px;
+        }   .oracle-water::before {
+            top: 25px;
+            left: 10px;
+        }
+        
+        .oracle-water::after {
+            top: 45px;
+            left: 10px;
+        }
+        
+        .oracle-fire {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+        
+        .oracle-fire::before {
+            content: "";
+            position: absolute;
+            top: 40px;
+            left: 35px;
+            width: 10px;
+            height: 40px;
+            background: #5c3d2e;
+            border-radius: 5px;
+        }
+        
+        .oracle-fire::after {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 30px;
+            border: 5px solid #5c3d2e;
+            border-bottom: none;
+            border-radius: 50% 50% 0 0;
+        } .options {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .option {
+            background-color: #e8d8b8;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .option:hover {
+            background-color: #d9c7a7;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .option.correct {
+            background-color: #a8d5a2;
+            border-color: #5a9e5a;
+        }
+        
+        .option.incorrect {
+            background-color: #e8a8a8;
+            border-color: #b85c5c;
+        }
+        
+        .feedback {
+            text-align: center;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            background-color: #8b4513;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        } button:hover {
+            background-color: #a0522d;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .instructions {
+            background-color: #f0e6d2;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border-left: 5px solid #8b4513;
+        }
+        
+        .instructions h2 {
+            margin-bottom: 10px;
+            color: #8b4513;
+        }
+        
+        .instructions p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        /* 甲骨文图形样式 */
+        .oracle-human {
+            width: 80px;
+            height: 100px;
+            position: relative;
+        }
+        
+        .oracle-human::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 35px;
+            width: 10px;
+            height: 40px;
+            background: #5c3d2e;
+            border-radius: 5px;
+        }
+        
+        .oracle-human::after {
+            content: "";
+            position: absolute;
+            top: 50px;
+            left: 20px;
+            width: 40px;
+            height: 50px;
+            border: 5px solid #5c3d2e;
+            border-top: none;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .oracle-tree {
+            width: 80px;
+            height: 100px;
+            position: relative;
+        }
+        
+        .oracle-tree::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 35px;
+            width: 10px;
+            height: 80px;
+            background: #5c3d2e;
+            border-radius: 5px;
+        }
+        
+        .oracle-tree::after {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 50px;
+            height: 30px;
+            border: 5px solid #5c3d2e;
+            border-bottom: none;
+            border-radius: 25px 25px 0 0;
+        }
+        
+        .oracle-sun {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+        
+        .oracle-sun::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 60px;
+            height: 60px;
+            border: 5px solid #5c3d2e;
+            border-radius: 50%;
+        }
+        
+        .oracle-sun::after {
+            content: "";
+            position: absolute;
+            top: 30px;
+            left: 0;
+            width: 80px;
+            height: 5px;
+            background: #5c3d2e;
+        }
+        
+        .oracle-moon {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+        
+        .oracle-moon::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            width: 40px;
+            height: 60px;
+            border: 5px solid #5c3d2e;
+            border-radius: 50%;
+        }
+        
+        .oracle-moon::after {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 60px;
+            background: #f5f2e9;
+            border-radius: 50%;
+        }
+        
+        .oracle-water {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+        
+        .oracle-water::before,
+        .oracle-water::after {
+            content: "";
+            position: absolute;
+            width: 60px;
+            height: 5px;
+            background: #5c3d2e;
+            border-radius: 5px;
+        }   .oracle-water::before {
+            top: 25px;
+            left: 10px;
+        }
+        
+        .oracle-water::after {
+            top: 45px;
+            left: 10px;
+        }
+        
+        .oracle-fire {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+        
+        .oracle-fire::before {
+            content: "";
+            position: absolute;
+            top: 40px;
+            left: 35px;
+            width: 10px;
+            height: 40px;
+            background: #5c3d2e;
+            border-radius: 5px;
+        }
+        
+        .oracle-fire::after {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 30px;
+            border: 5px solid #5c3d2e;
+            border-bottom: none;
+            border-radius: 50% 50% 0 0;
+        }  .oracle-mountain {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+        
+        .oracle-mountain::before,
+        .oracle-mountain::after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 50px;
+            background: #5c3d2e;
+            border-radius: 5px;
+        }
+        
+        .oracle-mountain::before {
+            top: 30px;
+            left: 15px;
+            transform: skewX(-10deg);
+        }
+        
+        .oracle-mountain::after {
+            top: 30px;
+            left: 45px;
+            transform: skewX(10deg);
+        }
+        
+        .oracle-rain {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+        
+        .oracle-rain::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 60px;
+            height: 40px;
+            border: 5px solid #5c3d2e;
+            border-bottom: none;
+            border-radius: 30px 30px 0 0;
+        }
+        
+        .oracle-rain::after {
+            content: "";
+            position: absolute;
+            top: 50px;
+            left: 25px;
+            width: 5px;
+            height: 30px;
+            background: #5c3d2e;
+            border-radius: 5px;
+        }
+        
+        .oracle-rain .raindrop {
+            position: absolute;
+            width: 5px;
+            height: 15px;
+            background: #5c3d2e;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .raindrop:nth-child(2) {
+            top: 50px;
+            left: 40px;
+        }
+        
+        .raindrop:nth-child(3) {
+            top: 50px;
+            left: 55px;
+        }
+        
+        @media (max-width: 768px) {
+            .game-area {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>甲骨文猜字游戏</h1>
+            <p>探索古老文字，测试你的汉字知识</p >
+        </header>
+        
+        <div class="game-info">
+            <div class="score">得分: <span id="score">0</span></div>
+            <div class="progress">进度: <span id="progress">1</span>/10</div>
+        </div>
+        
+        <div class="game-area">
+            <div class="oracle-bone">
+                <h2>甲骨文字符</h2>
+                <div class="oracle-character" id="oracle-character">
+                    <!-- 甲骨文图形将通过JavaScript动态生成 -->
+                </div>
+                <p>观察上面的甲骨文，选择对应的现代汉字</p >
+            </div>
+            
+            <div class="options" id="options">
+                <!-- 选项将通过JavaScript动态生成 -->
+            </div>
+        </div>
+        
+        <div class="feedback" id="feedback">
+            请选择一个选项开始游戏
+        </div>
+        
+        <div class="controls">
+            <button id="next-btn" disabled>下一题</button>
+            <button id="restart-btn">重新开始</button>
+        </div>
+        
+        <div class="instructions">
+            <h2>游戏说明</h2>
+            <p>1. 观察左侧显示的甲骨文字符，从右侧选项中选择对应的现代汉字。</p >
+            <p>2. 选择正确得10分，选择错误不扣分。</p >
+            <p>3. 完成10道题目后查看最终得分。</p >
+            <p>4. 甲骨文是中国商代晚期王室用于占卜记事而在龟甲或兽骨上契刻的文字，是中国及东亚已知最早的成体系文字。</p >
+        </div>
+    </div>
+    <script>
+        // 甲骨文数据 - 使用CSS绘制的甲骨文图形
+        const oracleData = [
+            { 
+                oracle: "人", 
+                options: ["人", "大", "天", "木"], 
+                answer: "人",
+                element: '<div class="oracle-human"></div>'
+            }, 
+            { 
+                oracle: "木", 
+                options: ["林", "木", "森", "树"], 
+                answer: "木",
+                element: '<div class="oracle-tree"></div>'
+            },
+            { 
+                oracle: "日", 
+                options: ["日", "月", "明", "星"], 
+                answer: "日",
+                element: '<div class="oracle-sun"></div>'
+            },
+            { 
+                oracle: "月", 
+                options: ["月", "夕", "明", "有"], 
+                answer: "月",
+                element: '<div class="oracle-moon"></div>'
+            },
+            { 
+                oracle: "水", 
+                options: ["水", "冰", "河", "泉"], 
+                answer: "水",
+                element: '<div class="oracle-water"></div>'
+            },
+            { 
+                oracle: "火", 
+                options: ["火", "炎", "热", "灭"], 
+                answer: "火",
+                element: '<div class="oracle-fire"></div>'
+            },
+            { 
+                oracle: "山", 
+                options: ["山", "丘", "岳", "峰"], 
+                answer: "山",
+                element: '<div class="oracle-mountain"></div>'
+            },
+            { 
+                oracle: "雨", 
+                options: ["雨", "雪", "雷", "云"], 
+                answer: "雨",
+                element: '<div class="oracle-rain"><div class="raindrop"></div><div class="raindrop"></div><div class="raindrop"></div></div>'
+            },
+            { 
+                oracle: "人", 
+                options: ["人", "大", "天", "木"], 
+                answer: "人",
+                element: '<div class="oracle-human"></div>'
+            },
+            { 
+                oracle: "木", 
+                options: ["林", "木", "森", "树"], 
+                answer: "木",
+                element: '<div class="oracle-tree"></div>'
+            }
+        ];
+
+        // 游戏状态
+        let currentQuestion = 0;
+        let score = 0;
+        let gameCompleted = false;
+
+        // DOM元素
+        const oracleCharacterEl = document.getElementById('oracle-character');
+        const optionsEl = document.getElementById('options');
+        const feedbackEl = document.getElementById('feedback');
+        const scoreEl = document.getElementById('score');
+        const progressEl = document.getElementById('progress');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        // 初始化游戏
+        function initGame() {
+            currentQuestion = 0;
+            score = 0;
+            gameCompleted = false;
+            scoreEl.textContent = score;
+            progressEl.textContent = `${currentQuestion + 1}/${oracleData.length}`;
+            nextBtn.disabled = true;
+            loadQuestion();
+        }
+
+        // 加载问题
+        function loadQuestion() {
+            const question = oracleData[currentQuestion];
+            
+            // 设置甲骨文图形
+            oracleCharacterEl.innerHTML = question.element;
+            
+            // 清空选项
+            optionsEl.innerHTML = '';
+            
+            // 随机排序选项
+            const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+            
+            // 创建选项按钮
+            shuffledOptions.forEach(option => {
+                const optionEl = document.createElement('div');
+                optionEl.className = 'option';
+                optionEl.textContent = option;
+                optionEl.addEventListener('click', () => checkAnswer(option, optionEl));
+                optionsEl.appendChild(optionEl);
+            });
+            
+            feedbackEl.textContent = '请选择一个选项';
+            feedbackEl.style.backgroundColor = '#f0e6d2';
+        }
+
+        // 检查答案
+        function checkAnswer(selectedOption, optionEl) {
+            if (gameCompleted) return;
+            
+            const question = oracleData[currentQuestion];
+            const options = document.querySelectorAll('.option');
+            
+            // 禁用所有选项
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            // 标记正确和错误答案
+            options.forEach(opt => {
+                if (opt.textContent === question.answer) {
+                    opt.classList.add('correct');
+                } else if (opt === optionEl && selectedOption !== question.answer) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // 显示反馈
+            if (selectedOption === question.answer) {
+                feedbackEl.textContent = '回答正确！';
+                feedbackEl.style.backgroundColor = '#a8d5a2';
+                score += 10;
+                scoreEl.textContent = score;
+            } else {
+                feedbackEl.textContent = `回答错误！正确答案是：${question.answer}`;
+                feedbackEl.style.backgroundColor = '#e8a8a8';
+            }
+            
+            nextBtn.disabled = false;
+        }
+
+        // 下一题
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion < oracleData.length) {
+                progressEl.textContent = `${currentQuestion + 1}/${oracleData.length}`;
+                loadQuestion();
+                nextBtn.disabled = true;
+            } else {
+                // 游戏结束
+                gameCompleted = true;
+                oracleCharacterEl.innerHTML = '<div style="font-size: 3rem;">结束</div>';
+                optionsEl.innerHTML = '';
+                feedbackEl.textContent = `游戏结束！你的最终得分是：${score}`;
+                feedbackEl.style.backgroundColor = '#e8d8b8';
+                nextBtn.disabled = true;
+            }
+        }
+
+        // 事件监听
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', initGame);
+
+        // 启动游戏
+        initGame();
+    </script>
+</body>
+</html>
