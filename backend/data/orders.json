@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "id": "ORD17843635485E13",
+    "username": "testuser",
+    "items": [
+      {
+        "id": 1,
+        "name": "甲骨文创意U盘",
+        "price": 68,
+        "quantity": 1
+      }
+    ],
+    "total": 68,
+    "status": "pending",
+    "createdAt": 1784363548
+  }
+]

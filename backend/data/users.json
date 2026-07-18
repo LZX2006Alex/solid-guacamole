@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "id": 1,
+    "username": "testuser",
+    "password": "d7de864b4b458f5cdc32fa8754d3db30a688516443a4f894d941917f134f036d",
+    "phone": "13800138000",
+    "name": "testuser",
+    "createdAt": 1784363530
+  }
+]

@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "id": "67f6698663484bed87eb0012a05261f0",
+    "username": "testuser",
+    "game": "guess_char",
+    "score": 90,
+    "createdAt": 1784363556
+  }
+]

@@ -1228,7 +1228,7 @@
             <span>总计:</span>
             <span id="cartTotal">￥0</span>
         </div>
-        <button class="btn" style="width: 100%;">去结算</button>
+        <button class="btn" style="width: 100%;" id="checkoutBtn">去结算</button>
     </div>
 
     <!-- 主横幅 -->
@@ -1530,6 +1530,7 @@
         const cartItems = document.getElementById('cartItems');
         const cartTotal = document.getElementById('cartTotal');
         const cartCount = document.querySelector('.cart-count');
+        const checkoutBtn = document.getElementById('checkoutBtn');
         const addToCartButtons = document.querySelectorAll('.add-to-cart');
         const boneItems = document.querySelectorAll('.bone-item');
 
@@ -1672,32 +1673,26 @@
             const username = loginUsername.value.trim();
             const password = loginPassword.value.trim();
             
-            // 验证
             const isUsernameValid = validateRequired(loginUsername, loginUsernameError, '请输入用户名');
             const isPasswordValid = validateRequired(loginPassword, loginPasswordError, '请输入密码');
             if (!isUsernameValid || !isPasswordValid) return;
             
-            // 加载状态
             loginBtn.disabled = true;
             loginBtnText.textContent = '登录中...';
             loginLoader.classList.add('show');
             loginFeedback.classList.remove('show');
             
-            // 模拟登录请求
-            setTimeout(() => {
-                const user = mockUsers.find(u => u.username === username);
-                if (user && PasswordUtil.verify(password, user.password)) {
-                    // 登录成功
-                    currentUser = user;
-                    Auth.setCurrentUser(user);
-                    loginBtn.textContent = user.name;
+            API.login(username, password).then(res => {
+                if (res.success) {
+                    currentUser = res.user;
+                    Auth.setCurrentUser(res.user);
+                    loginBtn.textContent = res.user.name;
                     const successColor = getComputedStyle(document.documentElement).getPropertyValue('--success-color');
                     loginBtn.style.backgroundColor = successColor;
                     
-                    loginFeedback.textContent = `欢迎回来，${user.name}！`;
+                    loginFeedback.textContent = `欢迎回来，${res.user.name}！`;
                     loginFeedback.className = 'form-feedback success show';
                     
-                    // 关闭模态框
                     setTimeout(() => {
                         authModal.style.opacity = 0;
                         setTimeout(() => {
@@ -1706,8 +1701,7 @@
                         }, 300);
                     }, 1200);
                 } else {
-                    // 登录失败
-                    loginFeedback.textContent = '用户名或密码错误，请重试';
+                    loginFeedback.textContent = res.message || '用户名或密码错误，请重试';
                     loginFeedback.className = 'form-feedback error show';
                     loginUsername.classList.add('shake');
                     loginPassword.classList.add('shake');
@@ -1717,11 +1711,16 @@
                     }, 500);
                 }
                 
-                // 重置状态
                 loginBtn.disabled = false;
                 loginBtnText.textContent = '登录';
                 loginLoader.classList.remove('show');
-            }, 1500);
+            }).catch(err => {
+                loginFeedback.textContent = '网络连接失败，请稍后重试';
+                loginFeedback.className = 'form-feedback error show';
+                loginBtn.disabled = false;
+                loginBtnText.textContent = '登录';
+                loginLoader.classList.remove('show');
+            });
         });
 
         // 注册表单提交
@@ -1733,7 +1732,6 @@
             const password = registerPassword.value.trim();
             const confirmPwd = confirmPassword.value.trim();
             
-            // 验证
             const isPhoneValid = validatePhone(registerPhone, registerPhoneError);
             const isCodeValid = validateRequired(verifyCode, verifyCodeError, '请输入验证码');
             const isUsernameValid = validateRequired(registerUsername, registerUsernameError, '请设置用户名');
@@ -1741,7 +1739,6 @@
             const isConfirmValid = validateConfirmPassword(registerPassword, confirmPassword, confirmPasswordError);
             if (!isPhoneValid || !isCodeValid || !isUsernameValid || !isPasswordValid || !isConfirmValid) return;
             
-            // 验证验证码
             if (code !== storedVerifyCode) {
                 verifyCodeError.textContent = '验证码不正确';
                 verifyCodeError.classList.add('show');
@@ -1750,47 +1747,35 @@
                 return;
             }
             
-            // 检查手机号是否已注册
-            const isPhoneRegistered = mockUsers.some(u => u.phone === phone);
-            if (isPhoneRegistered) {
-                registerFeedback.textContent = '该手机号已注册，请直接登录';
-                registerFeedback.className = 'form-feedback error show';
-                return;
-            }
-            
-            // 检查用户名是否已存在
-            const isUsernameExists = mockUsers.some(u => u.username === username);
-            if (isUsernameExists) {
-                registerUsernameError.textContent = '该用户名已被使用，请更换';
-                registerUsernameError.classList.add('show');
-                registerUsername.classList.add('shake');
-                setTimeout(() => registerUsername.classList.remove('shake'), 500);
-                return;
-            }
-            
-            // 加载状态
             registerForm.querySelector('button').disabled = true;
             registerBtnText.textContent = '注册中...';
             registerLoader.classList.add('show');
             registerFeedback.classList.remove('show');
             
-            // 模拟注册请求
-            setTimeout(() => {
-                // 添加新用户（密码使用哈希存储）
-                mockUsers.push({
-                    username,
-                    password: PasswordUtil.hash(password),
-                    name: username,
-                    phone
-                });
-                 // 进入注册成功面板
-                switchPanel(registerPanel, registerSuccessPanel, '注册成功');
+            API.register(username, password, phone).then(res => {
+                if (res.success) {
+                    switchPanel(registerPanel, registerSuccessPanel, '注册成功');
+                } else {
+                    registerFeedback.textContent = res.message || '注册失败，请重试';
+                    registerFeedback.className = 'form-feedback error show';
+                    if (res.message && res.message.includes('用户名已存在')) {
+                        registerUsernameError.textContent = res.message;
+                        registerUsernameError.classList.add('show');
+                        registerUsername.classList.add('shake');
+                        setTimeout(() => registerUsername.classList.remove('shake'), 500);
+                    }
+                }
                 
-                // 重置状态
                 registerForm.querySelector('button').disabled = false;
                 registerBtnText.textContent = '注册';
                 registerLoader.classList.remove('show');
-            }, 1500);
+            }).catch(err => {
+                registerFeedback.textContent = '网络连接失败，请稍后重试';
+                registerFeedback.className = 'form-feedback error show';
+                registerForm.querySelector('button').disabled = false;
+                registerBtnText.textContent = '注册';
+                registerLoader.classList.remove('show');
+            });
         });
 
         // 发送验证码
@@ -1954,6 +1939,34 @@
             
             cartTotal.textContent = `￥${total}`;
         }
+
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                Toast.warning('购物车为空！');
+                return;
+            }
+            if (!currentUser) {
+                Toast.warning('请先登录！');
+                authModal.style.display = 'flex';
+                setTimeout(() => authModal.classList.add('active'), 10);
+                return;
+            }
+            
+            API.createOrder(cart).then(res => {
+                if (res.success) {
+                    Toast.success(`订单创建成功！订单号：${res.data.id}`);
+                    cart = [];
+                    CartManager.setCart(cart);
+                    updateCartDisplay();
+                    updateCartCount();
+                    cartModal.style.display = 'none';
+                } else {
+                    Toast.error(res.message || '订单创建失败');
+                }
+            }).catch(err => {
+                Toast.error('网络连接失败，请稍后重试');
+            });
+        });
 
         // 甲骨文字点击事件 - 显示详情弹窗（集成后端API）
         const charDetailModal = document.getElementById('charDetailModal');

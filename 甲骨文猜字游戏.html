@@ -393,6 +393,8 @@
             <p>4. 甲骨文是中国商代晚期王室用于占卜记事而在龟甲或兽骨上契刻的文字，是中国及东亚已知最早的成体系文字。</p >
         </div>
     </div>
+    <script src="./js/common.js"></script>
+    <script src="./js/api.js"></script>
     <script>
         // ===== SVG 字典常量：甲骨文字符 -> SVG 文件路径 =====
         const ORACLE_SVG_DICT = {
@@ -592,6 +594,13 @@
                 feedbackEl.textContent = `游戏结束！你的最终得分是：${score}`;
                 feedbackEl.style.backgroundColor = '#e8d8b8';
                 nextBtn.disabled = true;
+                
+                const username = localStorage.getItem('oracle_currentUser') ? JSON.parse(localStorage.getItem('oracle_currentUser')).username : '匿名用户';
+                API.submitScore(username, 'guess_char', score).then(res => {
+                    if (res.success) {
+                        feedbackEl.textContent += '（成绩已保存）';
+                    }
+                }).catch(() => {});
             }
         }
 
