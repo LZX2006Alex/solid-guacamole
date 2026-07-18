@@ -1,0 +1,237 @@
+/* ========================================
+ * 甲骨文创意学习与文创平台 - 公共样式
+ * ======================================== */
+
+:root {
+    --primary-color: #8c5e3c;
+    --secondary-color: #d4af37;
+    --light-color: #f5f1e6;
+    --dark-color: #5a3921;
+    --text-color: #333;
+    --white: #fff;
+    --shadow: 0 5px 15px rgba(0,0,0,0.1);
+    --shadow-heavy: 0 10px 30px rgba(0,0,0,0.2);
+    --gradient-primary: linear-gradient(135deg, #8c5e3c 0%, #a67c52 100%);
+    --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+    --success-color: #28a745;
+    --error-color: #dc3545;
+}
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.toast {
+    min-width: 280px;
+    max-width: 400px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    pointer-events: auto;
+    animation: toastSlideIn 0.3s ease, toastFadeOut 0.3s ease 2.7s forwards;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast.toast-success { background-color: #28a745; }
+.toast.toast-error { background-color: #dc3545; }
+.toast.toast-warning { background-color: #ffc107; color: #333; }
+.toast.toast-info { background-color: #17a2b8; }
+
+.toast .toast-icon { font-size: 18px; flex-shrink: 0; }
+.toast .toast-message { flex: 1; line-height: 1.4; }
+
+@keyframes toastSlideIn {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes toastFadeOut {
+    to { transform: translateX(120%); opacity: 0; }
+}
+
+.oracle-human, .oracle-tree, .oracle-sun, .oracle-moon,
+.oracle-water, .oracle-fire, .oracle-mountain, .oracle-rain {
+    position: relative;
+    display: inline-block;
+}
+
+.oracle-human { width: 60px; height: 80px; }
+.oracle-human::before {
+    content: ""; position: absolute; top: 10px; left: 25px;
+    width: 8px; height: 30px; background: #5c3d2e; border-radius: 4px;
+}
+.oracle-human::after {
+    content: ""; position: absolute; top: 40px; left: 15px;
+    width: 30px; height: 40px; border: 4px solid #5c3d2e;
+    border-top: none; border-radius: 0 0 15px 15px;
+}
+
+.oracle-tree { width: 60px; height: 80px; }
+.oracle-tree::before {
+    content: ""; position: absolute; top: 10px; left: 25px;
+    width: 8px; height: 60px; background: #5c3d2e; border-radius: 4px;
+}
+.oracle-tree::after {
+    content: ""; position: absolute; top: 12px; left: 12px;
+    width: 38px; height: 25px; border: 4px solid #5c3d2e;
+    border-bottom: none; border-radius: 20px 20px 0 0;
+}
+
+.oracle-sun { width: 60px; height: 60px; }
+.oracle-sun::before {
+    content: ""; position: absolute; top: 8px; left: 8px;
+    width: 44px; height: 44px; border: 4px solid #5c3d2e; border-radius: 50%;
+}
+.oracle-sun::after {
+    content: ""; position: absolute; top: 22px; left: 0;
+    width: 60px; height: 4px; background: #5c3d2e;
+}
+
+.oracle-moon { width: 60px; height: 60px; }
+.oracle-moon::before {
+    content: ""; position: absolute; top: 8px; left: 15px;
+    width: 30px; height: 45px; border: 4px solid #5c3d2e; border-radius: 50%;
+}
+.oracle-moon::after {
+    content: ""; position: absolute; top: 8px; left: 8px;
+    width: 15px; height: 45px; background: #f9f3e9; border-radius: 50%;
+}
+
+.oracle-water { width: 60px; height: 60px; }
+.oracle-water::before, .oracle-water::after {
+    content: ""; position: absolute; width: 45px; height: 4px;
+    background: #5c3d2e; border-radius: 4px;
+}
+.oracle-water::before { top: 20px; left: 8px; }
+.oracle-water::after { top: 35px; left: 8px; }
+
+.oracle-fire { width: 60px; height: 60px; }
+.oracle-fire::before {
+    content: ""; position: absolute; top: 30px; left: 25px;
+    width: 8px; height: 30px; background: #5c3d2e; border-radius: 4px;
+}
+.oracle-fire::after {
+    content: ""; position: absolute; top: 15px; left: 15px;
+    width: 30px; height: 25px; border: 4px solid #5c3d2e;
+    border-bottom: none; border-radius: 50% 50% 0 0;
+}
+
+.oracle-mountain { width: 60px; height: 60px; }
+.oracle-mountain::before, .oracle-mountain::after {
+    content: ""; position: absolute; width: 22px; height: 40px;
+    background: #5c3d2e; border-radius: 4px;
+}
+.oracle-mountain::before { top: 20px; left: 12px; transform: skewX(-10deg); }
+.oracle-mountain::after { top: 20px; left: 34px; transform: skewX(10deg); }
+
+.oracle-rain { width: 60px; height: 60px; }
+.oracle-rain::before {
+    content: ""; position: absolute; top: 8px; left: 8px;
+    width: 44px; height: 30px; border: 4px solid #5c3d2e;
+    border-bottom: none; border-radius: 22px 22px 0 0;
+}
+.oracle-rain::after {
+    content: ""; position: absolute; top: 38px; left: 20px;
+    width: 4px; height: 22px; background: #5c3d2e; border-radius: 4px;
+}
+
+.demo-oracle { opacity: 0.3; }
+
+.demo-human { width: 120px; height: 160px; position: relative; }
+.demo-human::before {
+    content: ""; position: absolute; top: 20px; left: 50px;
+    width: 16px; height: 60px; background: #8B4513; border-radius: 8px;
+}
+.demo-human::after {
+    content: ""; position: absolute; top: 80px; left: 30px;
+    width: 60px; height: 80px; border: 8px solid #8B4513;
+    border-top: none; border-radius: 0 0 30px 30px;
+}
+
+.demo-tree { width: 120px; height: 160px; position: relative; }
+.demo-tree::before {
+    content: ""; position: absolute; top: 20px; left: 50px;
+    width: 16px; height: 120px; background: #8B4513; border-radius: 8px;
+}
+.demo-tree::after {
+    content: ""; position: absolute; top: 24px; left: 24px;
+    width: 76px; height: 50px; border: 8px solid #8B4513;
+    border-bottom: none; border-radius: 40px 40px 0 0;
+}
+
+.demo-sun { width: 120px; height: 120px; position: relative; }
+.demo-sun::before {
+    content: ""; position: absolute; top: 16px; left: 16px;
+    width: 88px; height: 88px; border: 8px solid #8B4513; border-radius: 50%;
+}
+.demo-sun::after {
+    content: ""; position: absolute; top: 44px; left: 0;
+    width: 120px; height: 8px; background: #8B4513;
+}
+
+.demo-moon { width: 120px; height: 120px; position: relative; }
+.demo-moon::before {
+    content: ""; position: absolute; top: 16px; left: 30px;
+    width: 60px; height: 90px; border: 8px solid #8B4513; border-radius: 50%;
+}
+.demo-moon::after {
+    content: ""; position: absolute; top: 16px; left: 16px;
+    width: 30px; height: 90px; background: #f9f3e9; border-radius: 50%;
+}
+
+.demo-water { width: 120px; height: 120px; position: relative; }
+.demo-water::before, .demo-water::after {
+    content: ""; position: absolute; width: 90px; height: 8px;
+    background: #8B4513; border-radius: 8px;
+}
+.demo-water::before { top: 40px; left: 16px; }
+.demo-water::after { top: 70px; left: 16px; }
+
+.demo-fire { width: 120px; height: 120px; position: relative; }
+.demo-fire::before {
+    content: ""; position: absolute; top: 60px; left: 50px;
+    width: 16px; height: 60px; background: #8B4513; border-radius: 8px;
+}
+.demo-fire::after {
+    content: ""; position: absolute; top: 30px; left: 30px;
+    width: 60px; height: 50px; border: 8px solid #8B4513;
+    border-bottom: none; border-radius: 50% 50% 0 0;
+}
+
+.demo-mountain { width: 120px; height: 120px; position: relative; }
+.demo-mountain::before, .demo-mountain::after {
+    content: ""; position: absolute; width: 44px; height: 80px;
+    background: #8B4513; border-radius: 8px;
+}
+.demo-mountain::before { top: 40px; left: 24px; transform: skewX(-10deg); }
+.demo-mountain::after { top: 40px; left: 68px; transform: skewX(10deg); }
+
+.demo-rain { width: 120px; height: 120px; position: relative; }
+.demo-rain::before {
+    content: ""; position: absolute; top: 16px; left: 16px;
+    width: 88px; height: 60px; border: 8px solid #8B4513;
+    border-bottom: none; border-radius: 44px 44px 0 0;
+}
+.demo-rain::after {
+    content: ""; position: absolute; top: 76px; left: 40px;
+    width: 8px; height: 44px; background: #8B4513; border-radius: 8px;
+}
+
+img[data-src] {
+    background-color: #e8dfca;
+    transition: opacity 0.3s;
+}
+img.lazy-loaded { opacity: 1; }
+img.lazy-loading { opacity: 0.5; }

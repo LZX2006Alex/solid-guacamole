@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>甲骨文翻译挑战</title>
+    <link rel="stylesheet" href="./css/common.css">
     <style>
         * {
             margin: 0;
@@ -569,7 +570,7 @@
             
             const userTranslation = translationInputEl.value.trim();
             if (!userTranslation) {
-                alert('请输入您的翻译');
+                Toast.warning('请输入您的翻译');
                 return;
             }
             
@@ -657,7 +658,7 @@
             const passage = oraclePassages[currentPassage];
             const keywords = passage.keywords.join('、');
             
-            alert(`提示：尝试在翻译中包含这些关键词：${keywords}`);
+            Toast.info(`提示：尝试在翻译中包含这些关键词：${keywords}`);
         }
 
         // 事件监听
@@ -669,5 +670,6 @@
         // 初始化游戏
         initGame();
     </script>
+    <script src="./js/common.js"></script>
 </body>
 </html>

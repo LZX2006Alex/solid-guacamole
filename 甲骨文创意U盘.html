@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>甲骨文文创 - 文化传承与创新</title>
+    <link rel="stylesheet" href="./css/common.css">
     <style>
         * {
             margin: 0;
@@ -339,7 +340,7 @@
             const phone = document.getElementById('phone').value;
             const quantity = document.getElementById('quantity').value;
             
-            alert(`感谢 ${name} 的订购！\n我们已收到您 ${quantity} 件商品的订单，稍后将通过电话 ${phone} 与您确认订单详情。`);
+            Toast.success(`感谢 ${name} 的订购！我们已收到您 ${quantity} 件商品的订单，稍后将通过电话 ${phone} 与您确认订单详情。`);
             
             // 在实际应用中，这里会发送数据到服务器
             // 重置表单
@@ -347,5 +348,6 @@
             document.getElementById('quantity').value = 1;
         });
     </script>
+    <script src="./js/common.js"></script>
 </body>
 </html>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>甲骨文文创定制服务</title>
+    <link rel="stylesheet" href="./css/common.css">
     <style>
         * {
             margin: 0;
@@ -851,7 +852,7 @@
                 updateCart();
                 
                 // 显示添加成功提示
-                alert(`已成功将 ${productName} 添加到购物车`);
+                Toast.success(`已成功将 ${productName} 添加到购物车`);
             });
         });customAddToCart.addEventListener('click', function() {
             const productType = document.getElementById('product-type');
@@ -891,11 +892,12 @@
             updateCart();
             
             // 显示添加成功提示
-            alert(`已成功将定制${selectedProduct}添加到购物车`);
+            Toast.success(`已成功将定制${selectedProduct}添加到购物车`);
         });
         
         // 初始化
         updateCart();
     </script>
+    <script src="./js/common.js"></script>
 </body>
 </html>

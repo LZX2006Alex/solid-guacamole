@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>甲骨文创意学习与文创平台</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/common.css">
     <style>
         :root {
             --primary-color: #8c5e3c; 
@@ -1286,7 +1287,7 @@
                     <p>将古老的甲骨文形象与U盘设计完美结合。</p >
                     <div class="price">￥98</div>
                     <div class="product-actions">
-                        <button class="btn add-to-cart" data-id="1" data-name="甲骨文创意U盘" data-price="68"><a href="file:///C:/Users/47385/OneDrive/Desktop/%E5%B9%B3%E5%8F%B0.html/%E7%94%B2%E9%AA%A8%E6%96%87%E5%88%9B%E6%84%8FU%E7%9B%98.html">加入购物车</a ></button>
+                        <button class="btn add-to-cart" data-id="1" data-name="甲骨文创意U盘" data-price="68"><a href="./甲骨文创意U盘.html">加入购物车</a ></button>
                         <button class="btn" style="background-color: #eeeeee;"><i class="far fa-heart"></i></button>
                     </div>
                 </div>
@@ -1298,7 +1299,7 @@
                     <p>精美设计的笔记本，内页印有甲骨文字及其解释。</p >
                     <div class="price">￥48</div>
                     <div class="product-actions">
-                     <button class="btn add-to-cart" data-id="2" data-name="甲骨文笔记本" data-price="48"><a href="file:///C:/Users/47385/OneDrive/Desktop/%E5%B9%B3%E5%8F%B0.html/%E7%94%B2%E9%AA%A8%E6%96%87%E7%AC%94%E8%AE%B0%E6%9C%AC.html">加入购物车</a></button>
+                     <button class="btn add-to-cart" data-id="2" data-name="甲骨文笔记本" data-price="48"><a href="./甲骨文笔记本.html">加入购物车</a></button>
                         <button class="btn" style="background-color: #eee;"><i class="far fa-heart"></i></button>
                     </div>
                 </div>
@@ -1310,7 +1311,7 @@
                     <p>一套精美的书签，每枚书签上都刻有不同的甲骨文字。</p >
                     <div class="price">￥36</div>
                     <div class="product-actions">
-                        <button class="btn add-to-cart" data-id="3" data-name="甲骨文书签套装" data-price="36"><a href="file:///C:/Users/47385/OneDrive/Desktop/%E5%B9%B3%E5%8F%B0.html/%E7%94%B2%E9%AA%A8%E6%96%87%E4%B9%A6%E7%AD%BE.html">加入购物车</a ></button>
+                        <button class="btn add-to-cart" data-id="3" data-name="甲骨文书签套装" data-price="36"><a href="./甲骨文书签.html">加入购物车</a ></button>
                         <button class="btn" style="background-color: #eee;"><i class="far fa-heart"></i></button>
                     </div>
                 </div>
@@ -1322,7 +1323,7 @@
                     <p>每个玩偶是依靠一个单独的甲骨文字设计</p >
                     <div class="price">￥78</div>
                     <div class="product-actions">
-                        <button class="btn add-to-cart" data-id="4" data-name="甲骨文玩偶" data-price="78"><a href="file:///C:/Users/47385/OneDrive/Desktop/%E5%B9%B3%E5%8F%B0.html/%E7%94%B2%E9%AA%A8%E6%96%87%E7%8E%A9%E5%81%B6.html">加入购物车</a ></button>
+                        <button class="btn add-to-cart" data-id="4" data-name="甲骨文玩偶" data-price="78"><a href="./甲骨文玩偶.html">加入购物车</a ></button>
                         <button class="btn" style="background-color: #eee;"><i class="far fa-heart"></i></button>
                     </div>
                 </div>
@@ -1363,6 +1364,11 @@
                 <h3>甲骨文翻译挑战</h3>
                 <p>尝试解读甲骨文卜辞，挑战你的甲骨文水平。</p >
                 <button class="btn" style="margin-top: 15px;"><a href="https://lzx2006alex.github.io/urban-rotary-phone/%E7%94%B2%E9%AA%A8%E6%96%87%E7%BF%BB%E8%AF%91%E6%8C%91%E6%88%98.html">开始游戏</a></button>
+            </div>
+            <div class="learning-option" style="background: linear-gradient(135deg, #6a4c93 0%, #836ba8 100%); color: white;">
+                <h3>甲骨文AR展示</h3>
+                <p>通过摄像头实时画面，AR叠加展示甲骨文字形。</p >
+                <button class="btn" style="margin-top: 15px;"><a href="./甲骨文AR展示.html">开启AR</a></button>
             </div>
         </div>
     </section>
@@ -1430,11 +1436,12 @@
         </div>
     </div>
 
+    <script src="./js/common.js"></script>
     <script>
-        // 模拟后端数据
+        // 模拟后端数据（密码已使用 PasswordUtil.hash 哈希处理）
         const mockUsers = [
-            { username: 'user1', password: 'pass1', name: '用户一', phone: '13800138000' },
-            { username: 'user2', password: 'pass2', name: '用户二', phone: '13900139000' }
+            { username: 'user1', password: PasswordUtil.hash('pass1'), name: '用户一', phone: '13800138000' },
+            { username: 'user2', password: PasswordUtil.hash('pass2'), name: '用户二', phone: '13900139000' }
         ];
 
         const mockProducts = [
@@ -1443,9 +1450,9 @@
             { id: 3, name: '甲骨文书签套装', price: 36, image: 'product3.jpg' },
             { id: 4, name: '甲骨文手机壳', price: 78, image: 'product4.jpg' }
         ];
-         // 应用状态
-        let currentUser = null;
-        let cart = [];
+         // 应用状态（从 LocalStorage 恢复登录状态和购物车）
+        let currentUser = Auth.getCurrentUser();
+        let cart = CartManager.getCart();
         let verifyCodeTimer = null;
         let storedVerifyCode = ''; // 存储生成的验证码
 
@@ -1502,6 +1509,14 @@
             loginLoader.classList.remove('show');
             registerLoader.classList.remove('show');
             hideAllFeedbacks();
+            // 恢复登录状态
+            if (currentUser) {
+                loginBtn.textContent = currentUser.name;
+                const successColor = getComputedStyle(document.documentElement).getPropertyValue('--success-color');
+                loginBtn.style.backgroundColor = successColor;
+            }
+            // 恢复购物车数量
+            updateCartCount();
         }
 
         // 隐藏所有反馈信息
@@ -1607,10 +1622,11 @@
             
             // 模拟登录请求
             setTimeout(() => {
-                const user = mockUsers.find(u => u.username === username && u.password === password);
-                if (user) {
+                const user = mockUsers.find(u => u.username === username);
+                if (user && PasswordUtil.verify(password, user.password)) {
                     // 登录成功
                     currentUser = user;
+                    Auth.setCurrentUser(user);
                     loginBtn.textContent = user.name;
                     const successColor = getComputedStyle(document.documentElement).getPropertyValue('--success-color');
                     loginBtn.style.backgroundColor = successColor;
@@ -1697,10 +1713,10 @@
             
             // 模拟注册请求
             setTimeout(() => {
-                // 添加新用户
+                // 添加新用户（密码使用哈希存储）
                 mockUsers.push({
                     username,
-                    password,
+                    password: PasswordUtil.hash(password),
                     name: username,
                     phone
                 });
@@ -1722,7 +1738,7 @@
             // 生成验证码
             storedVerifyCode = generateVerifyCode();
             // 模拟发送验证码（实际项目中应调用后端接口）
-            alert(`验证码已发送至 ${phone}，验证码为：${storedVerifyCode}（仅测试用）`);
+            Toast.info(`验证码已发送至 ${phone}，验证码为：${storedVerifyCode}（仅测试用）`);
             
             // 开始倒计时
             startVerifyCodeTimer();
@@ -1752,9 +1768,10 @@
             if (currentUser) {
                 // 退出登录
                 currentUser = null;
+                Auth.logout();
                 loginBtn.textContent = '登录';
                 loginBtn.style.backgroundColor = '';
-                alert('您已成功退出登录');
+                Toast.success('您已成功退出登录');
             } else {
                 // 打开登录模态框
                 authModal.style.display = 'flex';
@@ -1787,7 +1804,7 @@
         addToCartButtons.forEach(button => {
             button.addEventListener('click', () => {
                 if (!currentUser) {
-                    alert('请先登录再添加商品到购物车！');
+                    Toast.warning('请先登录再添加商品到购物车！');
                     authModal.style.display = 'flex';
                     setTimeout(() => authModal.classList.add('active'), 10);
                     return;
@@ -1804,8 +1821,9 @@
                     cart.push({ id, name, price, quantity: 1 });
                 }
                 
+                CartManager.setCart(cart);
                 updateCartCount();
-                alert(`已将 ${name} 添加到购物车！`);
+                Toast.success(`已将 ${name} 添加到购物车！`);
             });
         });
 
@@ -1850,6 +1868,7 @@
                         const item = cart.find(item => item.id === id);
                         if (item) {
                             item.quantity += 1;
+                            CartManager.setCart(cart);
                             updateCartDisplay();
                             updateCartCount();
                         }
@@ -1862,6 +1881,7 @@
                         const item = cart.find(item => item.id === id);
                         if (item && item.quantity > 1) {
                             item.quantity -= 1;
+                            CartManager.setCart(cart);
                             updateCartDisplay();
                             updateCartCount();
                         }
@@ -1876,7 +1896,7 @@
         boneItems.forEach(item => {
             item.addEventListener('click', () => {
                 const char = item.textContent;
-                alert(`您点击了甲骨文字: ${char}\n这是古代表示"${getCharMeaning(char)}"的象形文字。`);
+                Toast.info(`甲骨文字"${char}"：古代表示"${getCharMeaning(char)}"的象形文字`);
             });
         });
 
