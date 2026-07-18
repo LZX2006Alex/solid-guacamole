@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>甲骨文翻译挑战</title>
     <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/enhance.css">
     <style>
         * {
             margin: 0;
@@ -28,24 +29,40 @@
         header {
             text-align: center;
             margin-bottom: 30px;
-            padding: 25px;
-            background-color: rgba(222, 211, 195, 0.8);
+            padding: 30px 25px;
+            background: linear-gradient(135deg, #8a7355 0%, #7a5c3c 100%);
             border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-            border: 2px solid #a99275;
+            box-shadow: 0 8px 20px rgba(122, 92, 60, 0.35);
+            border: 2px solid #d4af37;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
+            pointer-events: none;
+        }
+
         h1 {
-            color: #7a5c3c;
+            color: #ffffff;
             font-size: 2.8rem;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4), 0 0 10px rgba(212, 175, 55, 0.4);
             letter-spacing: 3px;
+            position: relative;
         }
-        
+
         .subtitle {
-            color: #8a7355;
+            color: #f5e6c8;
             font-size: 1.3rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
         
         .stats-area {
@@ -65,8 +82,13 @@
         
         .stat-value {
             font-size: 2.5rem;
-            color: #7a5c3c;
+            background: linear-gradient(135deg, #d4af37 0%, #b8941f 50%, #8c5e3c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: #b8941f;
             font-weight: bold;
+            text-shadow: 0 1px 2px rgba(140, 94, 60, 0.15);
         }
         
         .stat-label {
@@ -102,18 +124,27 @@
             width: 100%;
             min-height: 300px;
             background-color: #d4c6b0;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(120, 90, 60, 0.18) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(120, 90, 60, 0.15) 0%, transparent 30%),
+                radial-gradient(circle at 50% 50%, rgba(255, 245, 220, 0.2) 0%, transparent 40%),
+                linear-gradient(135deg, #ddd0b8 0%, #c9b894 100%);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+            box-shadow:
+                inset 0 0 30px rgba(80, 55, 30, 0.45),
+                inset 0 0 8px rgba(50, 30, 10, 0.3),
+                0 6px 14px rgba(80, 55, 30, 0.25);
             border: 8px solid #b8a58a;
+            border-image: linear-gradient(135deg, #b8a58a, #8c6e4a, #b8a58a) 1;
             position: relative;
             overflow: hidden;
             padding: 20px;
         }
-        
+
         .oracle-bone::before {
             content: "";
             position: absolute;
@@ -121,7 +152,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
+            background:
+                linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.12) 50%, transparent 60%),
+                repeating-linear-gradient(45deg, transparent 0px, transparent 8px, rgba(80, 55, 30, 0.04) 8px, rgba(80, 55, 30, 0.04) 9px);
+            pointer-events: none;
         }
         
         .oracle-text {
@@ -176,26 +210,36 @@
             padding: 12px 20px;
             border: none;
             border-radius: 8px;
-            background-color: #8a7355;
+            background: linear-gradient(135deg, #8a7355 0%, #7a5c3c 50%, #8c5e3c 100%);
             color: #f5f1e6;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             font-size: 1.1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            border: 1px solid #6b4a2e;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
         }
-        
+
         button:hover {
-            background-color: #7a5c3c;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #d4af37 0%, #b8941f 50%, #8c5e3c 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(140, 94, 60, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            color: #fff8e0;
+        }
+
+        button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
         }
         
         .feedback-area {
             background-color: #e8dfd1;
+            background-image: linear-gradient(135deg, rgba(255, 245, 220, 0.4) 0%, transparent 100%);
             border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-            border: 2px solid #a99275;
+            box-shadow: 0 10px 25px rgba(122, 92, 60, 0.18), 0 2px 6px rgba(122, 92, 60, 0.08);
+            border: 2px solid #d4af37;
             margin-bottom: 30px;
             display: none;
         }
@@ -296,25 +340,50 @@
         
         .result-box {
             background-color: #e8dfd1;
+            background-image: linear-gradient(135deg, rgba(255, 245, 220, 0.5) 0%, transparent 100%);
             padding: 30px;
             border-radius: 15px;
             text-align: center;
             max-width: 500px;
             width: 90%;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            border: 3px solid #a99275;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 6px 15px rgba(122, 92, 60, 0.2);
+            border: 3px solid #d4af37;
+            position: relative;
+        }
+
+        .result-box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 12px;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
+            pointer-events: none;
         }
         
         .result-title {
             font-size: 2rem;
-            color: #7a5c3c;
+            background: linear-gradient(135deg, #d4af37 0%, #b8941f 50%, #8c5e3c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: #b8941f;
             margin-bottom: 20px;
+            position: relative;
         }
-        
+
         .result-score {
             font-size: 3rem;
-            color: #5d4c35;
+            background: linear-gradient(135deg, #d4af37 0%, #b8941f 50%, #8c5e3c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: #b8941f;
             margin-bottom: 20px;
+            position: relative;
+            font-weight: bold;
         }
         
         .result-message {
@@ -452,6 +521,69 @@
         </div>
     </div>
 
+    <script>
+        // 甲骨文字 -> SVG 文件字典（内联SVG字典常量）
+        const ORACLE_SVG_DICT = {
+            '日': './svg/日.svg',
+            '月': './svg/月.svg',
+            '雨': './svg/雨.svg',
+            '水': './svg/水.svg',
+            '火': './svg/火.svg',
+            '木': './svg/木.svg',
+            '山': './svg/山.svg',
+            '人': './svg/人.svg'
+        };
+
+        // 取出 .oracle-text 的“逻辑文本”：纯文本字符 + <img alt> 还原
+        function getOracleLogicalText(el) {
+            let text = '';
+            el.childNodes.forEach(node => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    text += node.textContent;
+                } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'IMG') {
+                    text += node.getAttribute('alt') || '';
+                }
+            });
+            return text;
+        }
+
+        // 根据逻辑文本构建带甲骨文 SVG 的 HTML
+        function buildOracleHtml(text) {
+            let html = '';
+            for (const ch of text) {
+                if (ORACLE_SVG_DICT[ch]) {
+                    html += `<img src="${ORACLE_SVG_DICT[ch]}" alt="${ch}" style="width:60px;height:60px;vertical-align:middle;filter:sepia(1) hue-rotate(15deg) saturate(2);">`;
+                } else {
+                    html += ch.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                }
+            }
+            return html;
+        }
+
+        // 遍历所有 .oracle-text，将关键甲骨文字替换为内嵌SVG展示（幂等：内容已一致则跳过）
+        function applyOracleSvg() {
+            document.querySelectorAll('.oracle-text').forEach(el => {
+                const text = getOracleLogicalText(el);
+                const html = buildOracleHtml(text);
+                if (el.innerHTML !== html) {
+                    el.innerHTML = html;
+                }
+            });
+        }
+
+        // DOM 加载完成后：首次渲染，并通过 MutationObserver 监听内容变化，
+        // 保证 loadPassage() 使用 textContent 重置文本后仍能自动重新渲染为 SVG。
+        document.addEventListener('DOMContentLoaded', function () {
+            applyOracleSvg();
+            const target = document.getElementById('oracle-text');
+            if (target && 'MutationObserver' in window) {
+                const observer = new MutationObserver(function () {
+                    applyOracleSvg();
+                });
+                observer.observe(target, { childList: true, characterData: true, subtree: true });
+            }
+        });
+    </script>
     <script>
         // 甲骨文段落数据
         const oraclePassages = [

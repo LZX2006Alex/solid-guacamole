@@ -4,666 +4,349 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>甲骨文猜字游戏</title>
+    <link rel="stylesheet" href="./css/enhance.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Microsoft YaHei', sans-serif;
+            font-family: 'Microsoft YaHei', 'STKaiti', 'KaiTi', serif;
         }
-        
+
+        /* ===== 整体背景：渐变米黄色 ===== */
         body {
-            background-color: #f5f2e9;
+            background: linear-gradient(135deg, #f5f1e6 0%, #ede4d0 50%, #f5f1e6 100%);
             color: #5c3d2e;
             padding: 20px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><rect fill="%235c3d2e" width="100" height="100"/></svg>');
+            min-height: 100vh;
         }
-        
+
+        /* ===== 主容器卡片：圆角16px + 柔和阴影 ===== */
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            background-color: #fff9e6;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(92, 61, 46, 0.2);
-            padding: 25px;
+            background-color: #fffdf5;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(140, 94, 60, 0.18), 0 2px 8px rgba(140, 94, 60, 0.08);
+            padding: 30px;
             border: 2px solid #d9c7a7;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        /* 容器顶部金色装饰条 */
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #8c5e3c, #d4af37, #8c5e3c);
+        }
+
+        /* ===== header：金色装饰条 + 渐变背景 ===== */
         header {
             text-align: center;
             margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px dashed #d9c7a7;
+            padding: 28px 15px 18px;
+            border-radius: 14px;
+            position: relative;
+            background: linear-gradient(135deg, #8c5e3c 0%, #6d4429 100%);
+            box-shadow: 0 6px 20px rgba(92, 61, 46, 0.25);
+            border-bottom: 3px solid #d4af37;
+            overflow: hidden;
         }
-        
+
+        /* header 金色装饰条 */
+        header::after {
+            content: "";
+            display: block;
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            margin: 14px auto 0;
+            border-radius: 2px;
+        }
+
         h1 {
-            color: #8b4513;
+            color: #f5e6c8;
             font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+            margin-bottom: 8px;
+            letter-spacing: 6px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
         }
-        
+
+        header p {
+            color: #e8d8b8;
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        /* ===== game-info：金色装饰 + 数字渐变色 ===== */
         .game-info {
             display: flex;
-            justify-content: space-between;
-            background-color: #e8d8b8;
-            padding: 12px 20px;
-            border-radius: 10px;
+            justify-content: space-around;
+            align-items: center;
+            background: linear-gradient(135deg, #ede0c8 0%, #e8d8b8 100%);
+            padding: 16px 24px;
+            border-radius: 12px;
             margin-bottom: 25px;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: bold;
+            color: #6d4429;
+            border: 1px solid #d4af37;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 3px 8px rgba(140, 94, 60, 0.1);
+            position: relative;
         }
-        
+
+        /* game-info 中央金色装饰点 */
+        .game-info::before {
+            content: "◆";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #d4af37;
+            font-size: 0.9rem;
+            opacity: 0.75;
+        }
+
+        .game-info span {
+            background: linear-gradient(135deg, #8c5e3c 0%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.35rem;
+            margin-left: 4px;
+        }
+
         .game-area {
             display: flex;
             flex-wrap: wrap;
             gap: 30px;
             margin-bottom: 25px;
         }
-        
+
+        /* ===== 甲骨文展示区外框 ===== */
         .oracle-bone {
             flex: 1;
             min-width: 300px;
-            background-color: #f0e6d2;
-            border-radius: 10px;
+            background: linear-gradient(135deg, #f5f1e6 0%, #ede0c8 100%);
+            border-radius: 12px;
             padding: 20px;
             text-align: center;
-            box-shadow: inset 0 0 10px rgba(92, 61, 46, 0.1);
-            border: 1px solid #d9c7a7;
+            box-shadow: inset 0 0 20px rgba(140, 94, 60, 0.12), 0 3px 10px rgba(140, 94, 60, 0.08);
+            border: 1px solid #d4af37;
         }
-        
+
+        .oracle-bone h2 {
+            color: #8c5e3c;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+        }
+
+        /* ===== 甲骨文字展示区：宣纸质感（米黄渐变 + 内阴影） ===== */
         .oracle-character {
-            height: 200px;
+            height: 220px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 20px 0;
+            margin: 18px 0;
             position: relative;
-        } .options {
+            background: radial-gradient(ellipse at center, #faf3e0 0%, #f0e6d2 70%, #e8dcc0 100%);
+            border-radius: 10px;
+            box-shadow:
+                inset 0 0 30px rgba(140, 94, 60, 0.22),
+                inset 0 0 6px rgba(140, 94, 60, 0.15);
+            border: 1px dashed #c9a961;
+            overflow: hidden;
+        }
+
+        /* 宣纸纹理装饰 */
+        .oracle-character::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(140, 94, 60, 0.04) 1px, transparent 2px),
+                radial-gradient(circle at 70% 60%, rgba(140, 94, 60, 0.04) 1px, transparent 2px),
+                radial-gradient(circle at 40% 80%, rgba(140, 94, 60, 0.03) 1px, transparent 2px);
+            background-size: 60px 60px, 80px 80px, 50px 50px;
+            pointer-events: none;
+        }
+
+        .oracle-character img {
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(2px 2px 3px rgba(92, 61, 46, 0.3));
+        }
+
+        .oracle-bone p {
+            color: #6d4429;
+            font-size: 0.95rem;
+            margin-top: 8px;
+        }
+
+        /* ===== 选项按钮：渐变背景 + 悬浮上移 ===== */
+        .options {
             flex: 1;
             min-width: 300px;
             display: flex;
             flex-direction: column;
             gap: 15px;
+            justify-content: center;
         }
-        
+
         .option {
-            background-color: #e8d8b8;
-            padding: 15px;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #f0e0c0 0%, #e8d8b8 100%);
+            padding: 16px;
+            border-radius: 10px;
             text-align: center;
             font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             border: 2px solid transparent;
+            box-shadow: 0 2px 5px rgba(140, 94, 60, 0.12);
+            color: #5c3d2e;
+            font-weight: 600;
         }
-        
+
         .option:hover {
-            background-color: #d9c7a7;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #e8d8b8 0%, #d9c7a7 100%);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 18px rgba(140, 94, 60, 0.22);
+            border-color: #d4af37;
         }
-        
+
+        /* 选中正确：绿色视觉反馈 */
         .option.correct {
-            background-color: #a8d5a2;
-            border-color: #5a9e5a;
+            background: linear-gradient(135deg, #b8e0a8 0%, #8fcf7f 100%);
+            border-color: #4a8a3a;
+            box-shadow: 0 4px 14px rgba(74, 138, 58, 0.45);
+            color: #2d5a1d;
+            animation: pop 0.4s ease;
         }
-        
+
+        /* 选中错误：红色视觉反馈 */
         .option.incorrect {
-            background-color: #e8a8a8;
+            background: linear-gradient(135deg, #f0b0b0 0%, #e88888 100%);
             border-color: #b85c5c;
+            box-shadow: 0 4px 14px rgba(184, 92, 92, 0.45);
+            color: #7a2d2d;
+            animation: shake 0.4s ease;
         }
-        
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
         .feedback {
             text-align: center;
-            padding: 15px;
+            padding: 16px;
             margin: 20px 0;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 1.3rem;
             font-weight: bold;
             min-height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
         }
-        
+
         .controls {
             display: flex;
             justify-content: center;
             gap: 15px;
             margin-top: 20px;
         }
-        
-        button {
-            padding: 12px 25px;
-            background-color: #8b4513;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        } button:hover {
-            background-color: #a0522d;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-        }
-        
-        .instructions {
-            background-color: #f0e6d2;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 25px;
-            border-left: 5px solid #8b4513;
-        }
-        
-        .instructions h2 {
-            margin-bottom: 10px;
-            color: #8b4513;
-        }
-        
-        .instructions p {
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
 
-        /* 甲骨文图形样式 */
-        .oracle-human {
-            width: 80px;
-            height: 100px;
-            position: relative;
-        }
-        
-        .oracle-human::before {
-            content: "";
-            position: absolute;
-            top: 10px;
-            left: 35px;
-            width: 10px;
-            height: 40px;
-            background: #5c3d2e;
-            border-radius: 5px;
-        }
-        
-        .oracle-human::after {
-            content: "";
-            position: absolute;
-            top: 50px;
-            left: 20px;
-            width: 40px;
-            height: 50px;
-            border: 5px solid #5c3d2e;
-            border-top: none;
-            border-radius: 0 0 20px 20px;
-        }
-        
-        .oracle-tree {
-            width: 80px;
-            height: 100px;
-            position: relative;
-        }
-        
-        .oracle-tree::before {
-            content: "";
-            position: absolute;
-            top: 10px;
-            left: 35px;
-            width: 10px;
-            height: 80px;
-            background: #5c3d2e;
-            border-radius: 5px;
-        }
-        
-        .oracle-tree::after {
-            content: "";
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            width: 50px;
-            height: 30px;
-            border: 5px solid #5c3d2e;
-            border-bottom: none;
-            border-radius: 25px 25px 0 0;
-        }
-        
-        .oracle-sun {
-            width: 80px;
-            height: 80px;
-            position: relative;
-        }
-        
-        .oracle-sun::before {
-            content: "";
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 60px;
-            height: 60px;
-            border: 5px solid #5c3d2e;
-            border-radius: 50%;
-        }
-        
-        .oracle-sun::after {
-            content: "";
-            position: absolute;
-            top: 30px;
-            left: 0;
-            width: 80px;
-            height: 5px;
-            background: #5c3d2e;
-        }
-        
-        .oracle-moon {
-            width: 80px;
-            height: 80px;
-            position: relative;
-        }
-        
-        .oracle-moon::before {
-            content: "";
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            width: 40px;
-            height: 60px;
-            border: 5px solid #5c3d2e;
-            border-radius: 50%;
-        }
-        
-        .oracle-moon::after {
-            content: "";
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 20px;
-            height: 60px;
-            background: #f5f2e9;
-            border-radius: 50%;
-        }
-        
-        .oracle-water {
-            width: 80px;
-            height: 80px;
-            position: relative;
-        }
-        
-        .oracle-water::before,
-        .oracle-water::after {
-            content: "";
-            position: absolute;
-            width: 60px;
-            height: 5px;
-            background: #5c3d2e;
-            border-radius: 5px;
-        }   .oracle-water::before {
-            top: 25px;
-            left: 10px;
-        }
-        
-        .oracle-water::after {
-            top: 45px;
-            left: 10px;
-        }
-        
-        .oracle-fire {
-            width: 80px;
-            height: 80px;
-            position: relative;
-        }
-        
-        .oracle-fire::before {
-            content: "";
-            position: absolute;
-            top: 40px;
-            left: 35px;
-            width: 10px;
-            height: 40px;
-            background: #5c3d2e;
-            border-radius: 5px;
-        }
-        
-        .oracle-fire::after {
-            content: "";
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 40px;
-            height: 30px;
-            border: 5px solid #5c3d2e;
-            border-bottom: none;
-            border-radius: 50% 50% 0 0;
-        } .options {
-            flex: 1;
-            min-width: 300px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .option {
-            background-color: #e8d8b8;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s;
+        button {
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #8c5e3c 0%, #6d4429 100%);
+            color: #f5e6c8;
             border: 2px solid transparent;
-        }
-        
-        .option:hover {
-            background-color: #d9c7a7;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-        }
-        
-        .option.correct {
-            background-color: #a8d5a2;
-            border-color: #5a9e5a;
-        }
-        
-        .option.incorrect {
-            background-color: #e8a8a8;
-            border-color: #b85c5c;
-        }
-        
-        .feedback {
-            text-align: center;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 8px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        button {
-            padding: 12px 25px;
-            background-color: #8b4513;
-            color: white;
-            border: none;
-            border-radius: 8px;
+            border-radius: 25px;
             font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s;
-        } button:hover {
-            background-color: #a0522d;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-        }
-        
-        .instructions {
-            background-color: #f0e6d2;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 25px;
-            border-left: 5px solid #8b4513;
-        }
-        
-        .instructions h2 {
-            margin-bottom: 10px;
-            color: #8b4513;
-        }
-        
-        .instructions p {
-            line-height: 1.6;
-            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 12px rgba(140, 94, 60, 0.3);
         }
 
-        /* 甲骨文图形样式 */
-        .oracle-human {
-            width: 80px;
-            height: 100px;
+        button:hover:not(:disabled) {
+            background: linear-gradient(135deg, #a0522d 0%, #8c5e3c 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(140, 94, 60, 0.4);
+            border-color: #d4af37;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        #restart-btn {
+            background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+            color: #3d2817;
+        }
+
+        #restart-btn:hover {
+            background: linear-gradient(135deg, #e8c547 0%, #d4af37 100%);
+            border-color: #8c5e3c;
+        }
+
+        .instructions {
+            background: linear-gradient(135deg, #f5f1e6 0%, #ede0c8 100%);
+            padding: 22px 24px;
+            border-radius: 12px;
+            margin-top: 25px;
+            border-left: 5px solid #d4af37;
+            box-shadow: inset 0 0 15px rgba(140, 94, 60, 0.08);
+        }
+
+        .instructions h2 {
+            margin-bottom: 12px;
+            color: #8c5e3c;
+            letter-spacing: 3px;
             position: relative;
+            padding-bottom: 8px;
         }
-        
-        .oracle-human::before {
+
+        .instructions h2::after {
             content: "";
             position: absolute;
-            top: 10px;
-            left: 35px;
-            width: 10px;
-            height: 40px;
-            background: #5c3d2e;
-            border-radius: 5px;
-        }
-        
-        .oracle-human::after {
-            content: "";
-            position: absolute;
-            top: 50px;
-            left: 20px;
-            width: 40px;
-            height: 50px;
-            border: 5px solid #5c3d2e;
-            border-top: none;
-            border-radius: 0 0 20px 20px;
-        }
-        
-        .oracle-tree {
-            width: 80px;
-            height: 100px;
-            position: relative;
-        }
-        
-        .oracle-tree::before {
-            content: "";
-            position: absolute;
-            top: 10px;
-            left: 35px;
-            width: 10px;
-            height: 80px;
-            background: #5c3d2e;
-            border-radius: 5px;
-        }
-        
-        .oracle-tree::after {
-            content: "";
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            width: 50px;
-            height: 30px;
-            border: 5px solid #5c3d2e;
-            border-bottom: none;
-            border-radius: 25px 25px 0 0;
-        }
-        
-        .oracle-sun {
-            width: 80px;
-            height: 80px;
-            position: relative;
-        }
-        
-        .oracle-sun::before {
-            content: "";
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 60px;
-            height: 60px;
-            border: 5px solid #5c3d2e;
-            border-radius: 50%;
-        }
-        
-        .oracle-sun::after {
-            content: "";
-            position: absolute;
-            top: 30px;
+            bottom: 0;
             left: 0;
-            width: 80px;
-            height: 5px;
-            background: #5c3d2e;
-        }
-        
-        .oracle-moon {
-            width: 80px;
-            height: 80px;
-            position: relative;
-        }
-        
-        .oracle-moon::before {
-            content: "";
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            width: 40px;
-            height: 60px;
-            border: 5px solid #5c3d2e;
-            border-radius: 50%;
-        }
-        
-        .oracle-moon::after {
-            content: "";
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 20px;
-            height: 60px;
-            background: #f5f2e9;
-            border-radius: 50%;
-        }
-        
-        .oracle-water {
-            width: 80px;
-            height: 80px;
-            position: relative;
-        }
-        
-        .oracle-water::before,
-        .oracle-water::after {
-            content: "";
-            position: absolute;
             width: 60px;
-            height: 5px;
-            background: #5c3d2e;
-            border-radius: 5px;
-        }   .oracle-water::before {
-            top: 25px;
-            left: 10px;
+            height: 3px;
+            background: linear-gradient(90deg, #d4af37, transparent);
+            border-radius: 2px;
         }
-        
-        .oracle-water::after {
-            top: 45px;
-            left: 10px;
+
+        .instructions p {
+            line-height: 1.8;
+            margin-bottom: 8px;
+            color: #6d4429;
         }
-        
-        .oracle-fire {
-            width: 80px;
-            height: 80px;
-            position: relative;
-        }
-        
-        .oracle-fire::before {
-            content: "";
-            position: absolute;
-            top: 40px;
-            left: 35px;
-            width: 10px;
-            height: 40px;
-            background: #5c3d2e;
-            border-radius: 5px;
-        }
-        
-        .oracle-fire::after {
-            content: "";
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 40px;
-            height: 30px;
-            border: 5px solid #5c3d2e;
-            border-bottom: none;
-            border-radius: 50% 50% 0 0;
-        }  .oracle-mountain {
-            width: 80px;
-            height: 80px;
-            position: relative;
-        }
-        
-        .oracle-mountain::before,
-        .oracle-mountain::after {
-            content: "";
-            position: absolute;
-            width: 30px;
-            height: 50px;
-            background: #5c3d2e;
-            border-radius: 5px;
-        }
-        
-        .oracle-mountain::before {
-            top: 30px;
-            left: 15px;
-            transform: skewX(-10deg);
-        }
-        
-        .oracle-mountain::after {
-            top: 30px;
-            left: 45px;
-            transform: skewX(10deg);
-        }
-        
-        .oracle-rain {
-            width: 80px;
-            height: 80px;
-            position: relative;
-        }
-        
-        .oracle-rain::before {
-            content: "";
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 60px;
-            height: 40px;
-            border: 5px solid #5c3d2e;
-            border-bottom: none;
-            border-radius: 30px 30px 0 0;
-        }
-        
-        .oracle-rain::after {
-            content: "";
-            position: absolute;
-            top: 50px;
-            left: 25px;
-            width: 5px;
-            height: 30px;
-            background: #5c3d2e;
-            border-radius: 5px;
-        }
-        
-        .oracle-rain .raindrop {
-            position: absolute;
-            width: 5px;
-            height: 15px;
-            background: #5c3d2e;
-            border-radius: 0 0 5px 5px;
-        }
-        
-        .raindrop:nth-child(2) {
-            top: 50px;
-            left: 40px;
-        }
-        
-        .raindrop:nth-child(3) {
-            top: 50px;
-            left: 55px;
-        }
-        
+
         @media (max-width: 768px) {
             .game-area {
                 flex-direction: column;
             }
+            h1 { font-size: 2rem; }
+            .game-info::before { display: none; }
         }
     </style>
 </head>
@@ -710,6 +393,39 @@
             <p>4. 甲骨文是中国商代晚期王室用于占卜记事而在龟甲或兽骨上契刻的文字，是中国及东亚已知最早的成体系文字。</p >
         </div>
     </div>
+    <script>
+        // ===== SVG 字典常量：甲骨文字符 -> SVG 文件路径 =====
+        const ORACLE_SVG_DICT = {
+            '人': './svg/人.svg',
+            '日': './svg/日.svg',
+            '月': './svg/月.svg',
+            '水': './svg/水.svg',
+            '火': './svg/火.svg',
+            '木': './svg/木.svg',
+            '山': './svg/山.svg',
+            '雨': './svg/雨.svg'
+        };
+
+        // 根据甲骨文字符把对应 SVG 渲染到题目展示区域
+        function renderOracleSVG(char) {
+            const target = document.getElementById('oracle-character');
+            if (!target) return;
+            const svgPath = ORACLE_SVG_DICT[char];
+            if (svgPath) {
+                target.innerHTML = '<img src="' + svgPath + '" alt="' + char + '" style="width:140px;height:140px;filter:sepia(1) hue-rotate(15deg) saturate(2);">';
+            } else if (char) {
+                // 未匹配到 SVG 时回退为文字展示
+                target.innerHTML = '<div style="font-size:5rem;color:#8c5e3c;font-weight:bold;font-family:STKaiti,serif;">' + char + '</div>';
+            }
+        }
+
+        // DOMContentLoaded 后初始化 SVG 展示（兜底渲染一次）
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof oracleData !== 'undefined' && typeof currentQuestion !== 'undefined' && oracleData[currentQuestion]) {
+                renderOracleSVG(oracleData[currentQuestion].oracle);
+            }
+        });
+    </script>
     <script>
         // 甲骨文数据 - 使用CSS绘制的甲骨文图形
         const oracleData = [
@@ -803,8 +519,8 @@
         function loadQuestion() {
             const question = oracleData[currentQuestion];
             
-            // 设置甲骨文图形
-            oracleCharacterEl.innerHTML = question.element;
+            // 设置甲骨文图形（使用 SVG 展示）
+            renderOracleSVG(question.oracle);
             
             // 清空选项
             optionsEl.innerHTML = '';
@@ -871,7 +587,7 @@
             } else {
                 // 游戏结束
                 gameCompleted = true;
-                oracleCharacterEl.innerHTML = '<div style="font-size: 3rem;">结束</div>';
+                oracleCharacterEl.innerHTML = '<div style="font-size: 3rem;color:#8c5e3c;font-weight:bold;">结束</div>';
                 optionsEl.innerHTML = '';
                 feedbackEl.textContent = `游戏结束！你的最终得分是：${score}`;
                 feedbackEl.style.backgroundColor = '#e8d8b8';

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>甲骨文文创定制服务</title>
     <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/enhance.css">
     <style>
         * {
             margin: 0;
@@ -14,9 +15,10 @@
         }
         
         body {
-            background: #f5f1e6;
+            background: radial-gradient(circle at 50% 0%, #faf6e8 0%, #f5f1e6 60%, #ede4d0 100%);
             color: #3a3225;
             line-height: 1.6;
+            min-height: 100vh;
         }
         
         .container {
@@ -122,12 +124,25 @@
             padding: 80px 0;
             text-align: center;
             margin-bottom: 50px;
+            box-shadow: inset 0 -10px 30px rgba(0, 0, 0, 0.2), 0 8px 25px rgba(122, 92, 60, 0.25);
+            border-bottom: 4px solid #d4af37;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, transparent 50%, rgba(0, 0, 0, 0.12) 100%);
+            pointer-events: none;
+        }
+
         .banner h1 {
             font-size: 3rem;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.4);
+            position: relative;
         }
         
         .banner p {
@@ -138,7 +153,7 @@
         
         .btn {
             display: inline-block;
-            background: #d4c6b0;
+            background: linear-gradient(135deg, #d4c6b0 0%, #c5b59a 100%);
             color: #5d4c35;
             padding: 12px 30px;
             border-radius: 30px;
@@ -148,21 +163,21 @@
             border: none;
             cursor: pointer;
             font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(140, 94, 60, 0.15);
         }
         
         .btn:hover {
-            background: #c5b59a;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(140, 94, 60, 0.25);
         }
         
         .btn-primary {
-            background: #8a7355;
+            background: linear-gradient(135deg, #8a7355 0%, #7a5c3c 100%);
             color: #f5f1e6;
         }
         
         .btn-primary:hover {
-            background: #7a5c3c;
+            background: linear-gradient(135deg, #7a5c3c 0%, #6a4c2c 100%);
         }
         
         /* 产品展示区 */
@@ -197,14 +212,16 @@
             margin-bottom: 80px;
         } .product-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            box-shadow: 0 8px 20px rgba(140, 94, 60, 0.12);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(212, 175, 55, 0.15);
         }
         
         .product-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(140, 94, 60, 0.25);
         }
         
         .product-img {
@@ -219,6 +236,9 @@
         .product-oracle {
             font-size: 4rem;
             color: #5d4c35;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .product-info {
@@ -251,10 +271,34 @@
         
         /* 定制区域 */
         .customization {
-            background: #e8dfd1;
+            background: linear-gradient(135deg, #ede4d0 0%, #e8dfd1 100%);
             padding: 60px 0;
             margin-bottom: 80px;
             border-radius: 15px;
+            border-top: 4px solid #d4af37;
+            border-bottom: 4px solid #d4af37;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(140, 94, 60, 0.1);
+        }
+
+        .customization::before,
+        .customization::after {
+            content: '❖';
+            position: absolute;
+            color: #d4af37;
+            font-size: 1.5rem;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .customization::before {
+            top: 18px;
+            left: 30px;
+        }
+
+        .customization::after {
+            bottom: 18px;
+            right: 30px;
         }
         
         .customization-container {
@@ -279,18 +323,35 @@
         .preview-item {
             width: 250px;
             height: 250px;
-            background: #f5f1e6;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(255, 250, 230, 0.7) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(230, 210, 170, 0.4) 0%, transparent 50%),
+                #f5f1e6;
             border: 2px dashed #a99275;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
+            box-shadow: inset 0 0 30px rgba(140, 94, 60, 0.08);
+            position: relative;
+        }
+
+        .preview-item::after {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 6px;
+            pointer-events: none;
         }
         
         .preview-oracle {
             font-size: 5rem;
             color: #5d4c35;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .custom-controls {
@@ -338,7 +399,7 @@
         
         .oracle-characters {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
             margin-top: 10px;
         }
@@ -346,22 +407,25 @@
         .oracle-char {
             background: #d4c6b0;
             border-radius: 5px;
-            height: 40px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             font-size: 1.5rem;
             transition: all 0.3s;
+            overflow: hidden;
         }
         
         .oracle-char:hover {
             background: #c5b59a;
+            transform: translateY(-2px);
         }
         
         .oracle-char.active {
-            background: #8a7355;
+            background: linear-gradient(135deg, #8a7355 0%, #7a5c3c 100%);
             color: white;
+            box-shadow: 0 4px 10px rgba(140, 94, 60, 0.25);
         }
         
         /* 购物车 */
@@ -586,7 +650,7 @@
 
 <div class="product-card">
                 <div class="product-img">
-                    <div class="product-oracle">𓆏</div>
+                    <div class="product-oracle" data-char="人">人</div>
                 </div>
                 <div class="product-info">
                     <h3>甲骨文T恤</h3>
@@ -603,7 +667,7 @@
 
             <div class="product-card">
                 <div class="product-img">
-                    <div class="product-oracle">𓍯</div>
+                    <div class="product-oracle" data-char="日">日</div>
                 </div>
                 <div class="product-info">
                     <h3>甲骨文马克杯</h3>
@@ -622,7 +686,7 @@
 
 <div class="product-card">
                 <div class="product-img">
-                    <div class="product-oracle">𓂀</div>
+                    <div class="product-oracle" data-char="月">月</div>
                 </div>
                 <div class="product-info">
                     <h3>甲骨文笔记本</h3>
@@ -644,7 +708,7 @@
 
             <div class="product-card">
                 <div class="product-img">
-                    <div class="product-oracle">𓃻</div>
+                    <div class="product-oracle" data-char="水">水</div>
                 </div>
                 <div class="product-info">
                     <h3>甲骨文帆布包</h3>
@@ -667,7 +731,7 @@
             <div class="customization-container">
                 <div class="custom-preview">
                     <div class="preview-item">
-                        <div class="preview-oracle" id="preview-oracle">𓃒</div>
+                        <div class="preview-oracle" id="preview-oracle" data-char="人">人</div>
                     </div>
                     <p>定制效果预览</p >
                 </div>
@@ -684,18 +748,14 @@
                     <div class="control-group">
                         <label>选择甲骨文字符</label>
                         <div class="oracle-characters">
-                            <div class="oracle-char active">𓃒</div>
-                            <div class="oracle-char">𓆏</div>
-                            <div class="oracle-char">𓍯</div>
-                            <div class="oracle-char">𓂀</div>
-                            <div class="oracle-char">𓃻</div>
-                            <div class="oracle-char">𓁛</div>
-                                  <div class="oracle-char">𓂧</div>
-                            <div class="oracle-char">𓅓</div>
-                            <div class="oracle-char">𓆑</div>
-                            <div class="oracle-char">𓇋</div>
-                            <div class="oracle-char">𓈖</div>
-                            <div class="oracle-char">𓉐</div>
+                            <div class="oracle-char active" data-char="人">人</div>
+                            <div class="oracle-char" data-char="日">日</div>
+                            <div class="oracle-char" data-char="月">月</div>
+                            <div class="oracle-char" data-char="水">水</div>
+                            <div class="oracle-char" data-char="火">火</div>
+                            <div class="oracle-char" data-char="木">木</div>
+                            <div class="oracle-char" data-char="山">山</div>
+                            <div class="oracle-char" data-char="雨">雨</div>
                         </div>
                     </div>
                     <div class="control-group">
@@ -754,6 +814,66 @@
             
         </div>
     </footer><script>
+        // SVG字典和渲染函数
+        const SVG_DICT = {
+            '人': './svg/人.svg',
+            '日': './svg/日.svg',
+            '月': './svg/月.svg',
+            '水': './svg/水.svg',
+            '火': './svg/火.svg',
+            '木': './svg/木.svg',
+            '山': './svg/山.svg',
+            '雨': './svg/雨.svg'
+        };
+
+        // 根据字符渲染对应SVG到指定元素
+        function renderOracleSVG(element, char, type) {
+            if (!element || !char || !SVG_DICT[char]) return;
+            const size = type === 'preview' ? 120 : (type === 'selector' ? 36 : 80);
+            const filter = 'sepia(1) hue-rotate(15deg) saturate(2)';
+            element.innerHTML = '<img src="' + SVG_DICT[char] + '" alt="' + char + '" style="width:' + size + 'px;height:' + size + 'px;filter:' + filter + ';object-fit:contain;">';
+        }
+
+        // 将颜色值转换为 hue-rotate 角度（用于SVG色调调整）
+        function colorToHueRotate(colorStr) {
+            const match = colorStr.match(/\d+/g);
+            if (!match || match.length < 3) return 15;
+            const r = parseInt(match[0]) / 255;
+            const g = parseInt(match[1]) / 255;
+            const b = parseInt(match[2]) / 255;
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h = 0;
+            if (max !== min) {
+                const d = max - min;
+                switch (max) {
+                    case r: h = ((g - b) / d) % 6; break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h *= 60;
+                if (h < 0) h += 360;
+            }
+            return Math.round(h);
+        }
+
+        // DOM加载完成后遍历页面所有甲骨文展示位置并替换为SVG
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.product-oracle').forEach(function(el) {
+                const char = el.dataset.char || (el.textContent || '').trim();
+                renderOracleSVG(el, char, 'product');
+            });
+            document.querySelectorAll('.preview-oracle').forEach(function(el) {
+                const char = el.dataset.char || (el.textContent || '').trim();
+                renderOracleSVG(el, char, 'preview');
+            });
+            document.querySelectorAll('.oracle-char').forEach(function(el) {
+                const char = el.dataset.char || (el.textContent || '').trim();
+                renderOracleSVG(el, char, 'selector');
+            });
+        });
+    </script>
+    <script>
         // 购物车功能
         const cartToggle = document.getElementById('cart-toggle');
         const cartModal = document.getElementById('cart-modal');
@@ -777,7 +897,9 @@
             char.addEventListener('click', function() {
                 oracleChars.forEach(c => c.classList.remove('active'));
                 this.classList.add('active');
-                previewOracle.textContent = this.textContent;
+                const selectedChar = this.dataset.char || (this.textContent || '').trim();
+                previewOracle.dataset.char = selectedChar;
+                renderOracleSVG(previewOracle, selectedChar, 'preview');
             });
         });
         
@@ -789,6 +911,12 @@
                 colorOptions.forEach(o => o.classList.remove('active'));
                 this.classList.add('active');
                 previewOracle.style.color = this.style.backgroundColor;
+                // 同步通过滤镜调整预览区SVG色调
+                const img = previewOracle.querySelector('img');
+                if (img) {
+                    const hue = colorToHueRotate(this.style.backgroundColor);
+                    img.style.filter = 'sepia(1) hue-rotate(' + hue + 'deg) saturate(2)';
+                }
             });
         });
         
@@ -816,12 +944,15 @@
             
             cartItems.forEach((item, index) => {
                 cartTotal += item.price;
-                
+
+                const oracleImgHtml = (typeof SVG_DICT !== 'undefined' && SVG_DICT[item.oracleChar])
+                    ? '<img src="' + SVG_DICT[item.oracleChar] + '" alt="' + item.oracleChar + '" style="width:50px;height:50px;filter:sepia(1) hue-rotate(15deg) saturate(2);object-fit:contain;">'
+                    : '<div style="font-size: 2rem;">' + item.oracleChar + '</div>';
                 const cartItemElement = document.createElement('div');
                 cartItemElement.className = 'cart-item';
                 cartItemElement.innerHTML = `
                     <div class="cart-item-img">
-                        <div style="font-size: 2rem;">${item.oracleChar}</div>
+                        ${oracleImgHtml}
                     </div>
                     <div class="cart-item-info">
                         <h4>${item.name}</h4>
@@ -829,7 +960,7 @@
                         <div class="cart-item-price">¥${item.price}</div>
                     </div>
                 `;
-                
+
                 cartItemsContainer.appendChild(cartItemElement);
             });
             
@@ -841,23 +972,25 @@
                 const productCard = this.closest('.product-card');
                 const productName = productCard.querySelector('h3').textContent;
                 const productPrice = parseInt(productCard.querySelector('.price').textContent.replace('¥', ''));
-                const oracleChar = productCard.querySelector('.product-oracle').textContent;
-                
+                const oracleEl = productCard.querySelector('.product-oracle');
+                const oracleChar = oracleEl.dataset.char || (oracleEl.textContent || '').trim();
+
                 cartItems.push({
                     name: productName,
                     price: productPrice,
                     oracleChar: oracleChar
                 });
-                
+
                 updateCart();
-                
+
                 // 显示添加成功提示
                 Toast.success(`已成功将 ${productName} 添加到购物车`);
             });
         });customAddToCart.addEventListener('click', function() {
             const productType = document.getElementById('product-type');
             const selectedProduct = productType.options[productType.selectedIndex].text;
-            const oracleChar = document.querySelector('.oracle-char.active').textContent;
+            const activeOracle = document.querySelector('.oracle-char.active');
+            const oracleChar = activeOracle.dataset.char || (activeOracle.textContent || '').trim();
             const customText = document.getElementById('custom-text').value;
             
             // 根据产品类型设置价格

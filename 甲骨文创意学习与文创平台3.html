@@ -6,6 +6,7 @@
     <title>甲骨文创意学习与文创平台</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/enhance.css">
     <style>
         :root {
             --primary-color: #8c5e3c; 
@@ -1336,16 +1337,76 @@
     <section class="oracle-bones">
         <div class="container">
             <h2 class="section-title">甲骨文字展示</h2>
-            <p>点击下方甲骨文字查看详细信息</p >
-            <div class="bone-container">
-               <div class="bone-item"><a href="https://www.bilibili.com/video/BV1LV411x7Rm/?spm_id_from=333.337.search-card.all.click&vd_source=e0323b8d9b34c6ce67c48a7d67b04405"><img src="./日.jpg" alt="日"height=160px width="150px"></a></div>
-                <div class="bone-item"><a href="https://www.bilibili.com/video/BV1dw411R79S/?spm_id_from=333.337.search-card.all.click&vd_source=e0323b8d9b34c6ce67c48a7d67b04405"><img src="./月.jpg" alt="日"height=160px width="150px"></a></div>
-                <div class="bone-item"><a href="https://www.bilibili.com/video/BV1M5411n7PQ/?spm_id_from=333.337.search-card.all.click&vd_source=e0323b8d9b34c6ce67c48a7d67b04405"><img src="./山.jpg" alt="山"height=160px width="150px"></a></div>
-                <div class="bone-item"><a href="https://www.bilibili.com/video/BV1964y1872S/?spm_id_from=333.337.search-card.all.click&vd_source=e0323b8d9b34c6ce67c48a7d67b04405"><img src="./水.jpg" alt="水"height=160px width="150px"></a></div>
-                <div class="bone-item"><a href="https://www.bilibili.com/video/BV1FL41147Gp/?spm_id_from=333.337.search-card.all.click&vd_source=e0323b8d9b34c6ce67c48a7d67b04405"><img src="./人.jpg" alt="人"height=160px width="150px"></a></div>
-                <div class="bone-item"><a href="https://www.bilibili.com/video/BV1D64y1s7ps/?spm_id_from=333.337.search-card.all.click&vd_source=e0323b8d9b34c6ce67c48a7d67b04405"><img src="./木.jpg" alt="木"height=160px width="150px"></a></div>
+            <p class="oracle-desc">点击下方真实甲骨文字（SVG矢量图）查看详细信息，共展示8个核心象形字</p>
+            <div class="bone-container" id="boneContainer">
+                <div class="bone-item" data-char="人" data-id="1">
+                    <div class="oracle-svg"><img src="./svg/人.svg" alt="甲骨文·人"></div>
+                    <div class="bone-label">人</div>
+                </div>
+                <div class="bone-item" data-char="日" data-id="2">
+                    <div class="oracle-svg"><img src="./svg/日.svg" alt="甲骨文·日"></div>
+                    <div class="bone-label">日</div>
+                </div>
+                <div class="bone-item" data-char="月" data-id="3">
+                    <div class="oracle-svg"><img src="./svg/月.svg" alt="甲骨文·月"></div>
+                    <div class="bone-label">月</div>
+                </div>
+                <div class="bone-item" data-char="水" data-id="4">
+                    <div class="oracle-svg"><img src="./svg/水.svg" alt="甲骨文·水"></div>
+                    <div class="bone-label">水</div>
+                </div>
+                <div class="bone-item" data-char="火" data-id="5">
+                    <div class="oracle-svg"><img src="./svg/火.svg" alt="甲骨文·火"></div>
+                    <div class="bone-label">火</div>
+                </div>
+                <div class="bone-item" data-char="木" data-id="6">
+                    <div class="oracle-svg"><img src="./svg/木.svg" alt="甲骨文·木"></div>
+                    <div class="bone-label">木</div>
+                </div>
+                <div class="bone-item" data-char="山" data-id="7">
+                    <div class="oracle-svg"><img src="./svg/山.svg" alt="甲骨文·山"></div>
+                    <div class="bone-label">山</div>
+                </div>
+                <div class="bone-item" data-char="雨" data-id="8">
+                    <div class="oracle-svg"><img src="./svg/雨.svg" alt="甲骨文·雨"></div>
+                    <div class="bone-label">雨</div>
+                </div>
+            </div>
         </div>
     </section>
+
+    <!-- 甲骨文字详情弹窗 -->
+    <div class="modal" id="charDetailModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2 id="charModalTitle">甲骨文字详情</h2>
+                <span class="close-modal" id="closeCharModal">&times;</span>
+            </div>
+            <div class="char-detail-body" id="charDetailBody" style="padding: 20px;">
+                <div style="text-align: center; padding: 20px;">
+                    <div class="oracle-svg-large" id="charDetailSvg" style="margin: 0 auto;"></div>
+                    <h3 id="charDetailChar" style="margin-top: 15px; font-size: 28px; color: var(--dark-color);"></h3>
+                    <p id="charDetailPinyin" style="color: var(--secondary-color); font-size: 18px; margin-top: 5px;"></p>
+                </div>
+                <div class="char-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0;">
+                    <div style="background: #f5f1e6; padding: 10px; border-radius: 8px;">
+                        <strong>类别：</strong><span id="charDetailCategory"></span>
+                    </div>
+                    <div style="background: #f5f1e6; padding: 10px; border-radius: 8px;">
+                        <strong>笔画：</strong><span id="charDetailStrokes"></span>
+                    </div>
+                </div>
+                <div style="background: #f5f1e6; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <strong>字义解释：</strong>
+                    <p id="charDetailMeaning" style="margin-top: 8px; line-height: 1.8;"></p>
+                </div>
+                <div style="background: #fff8e1; padding: 15px; border-radius: 8px;">
+                    <strong>甲骨文例词：</strong>
+                    <div id="charDetailExamples" style="margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- 互动学习 -->
     <section class="container interactive-learning">
@@ -1438,6 +1499,7 @@
     </div>
 
     <script src="./js/common.js"></script>
+    <script src="./js/api.js"></script>
     <script>
         // 模拟后端数据（密码已使用 PasswordUtil.hash 哈希处理）
         const mockUsers = [
@@ -1893,25 +1955,78 @@
             cartTotal.textContent = `￥${total}`;
         }
 
-        // 甲骨文字点击事件
-        boneItems.forEach(item => {
+        // 甲骨文字点击事件 - 显示详情弹窗（集成后端API）
+        const charDetailModal = document.getElementById('charDetailModal');
+        const closeCharModal = document.getElementById('closeCharModal');
+        const charDetailSvg = document.getElementById('charDetailSvg');
+        const charDetailChar = document.getElementById('charDetailChar');
+        const charDetailPinyin = document.getElementById('charDetailPinyin');
+        const charDetailCategory = document.getElementById('charDetailCategory');
+        const charDetailStrokes = document.getElementById('charDetailStrokes');
+        const charDetailMeaning = document.getElementById('charDetailMeaning');
+        const charDetailExamples = document.getElementById('charDetailExamples');
+
+        // 本地甲骨文数据（与后端ORACLE_CHARS_DATA同步，作为离线兜底）
+        const localOracleChars = {
+            '人': { char: '人', pinyin: 'rén', svg: './svg/人.svg', meaning: '人，象形字。像侧面站立的人形，本义为人。', category: '象形', strokeCount: 2, examples: ['大人', '小人', '众人'] },
+            '日': { char: '日', pinyin: 'rì', svg: './svg/日.svg', meaning: '日，象形字。像太阳之形，中间一横表示太阳的光芒，本义为太阳。', category: '象形', strokeCount: 4, examples: ['今日', '明日', '日出'] },
+            '月': { char: '月', pinyin: 'yuè', svg: './svg/月.svg', meaning: '月，象形字。像月牙之形，本义为月亮。', category: '象形', strokeCount: 4, examples: ['今月', '明月', '月食'] },
+            '水': { char: '水', pinyin: 'shuǐ', svg: './svg/水.svg', meaning: '水，象形字。像流水之形，中间线条表示水流，本义为水。', category: '象形', strokeCount: 5, examples: ['流水', '河水', '雨水'] },
+            '火': { char: '火', pinyin: 'huǒ', svg: './svg/火.svg', meaning: '火，象形字。像火焰升腾之形，本义为火。', category: '象形', strokeCount: 4, examples: ['大火', '小火', '火光'] },
+            '木': { char: '木', pinyin: 'mù', svg: './svg/木.svg', meaning: '木，象形字。像树木之形，上为树冠，下为树根，本义为树木。', category: '象形', strokeCount: 4, examples: ['大木', '林木', '木匠'] },
+            '山': { char: '山', pinyin: 'shān', svg: './svg/山.svg', meaning: '山，象形字。像山峰之形，三个山峰并列，本义为山。', category: '象形', strokeCount: 3, examples: ['高山', '大山', '山林'] },
+            '雨': { char: '雨', pinyin: 'yǔ', svg: './svg/雨.svg', meaning: '雨，象形字。上为天空，下为雨滴，本义为下雨。', category: '象形', strokeCount: 8, examples: ['大雨', '小雨', '风雨'] }
+        };
+
+        function showCharDetail(char) {
+            const data = localOracleChars[char];
+            if (!data) return;
+            charDetailSvg.innerHTML = `<img src="${data.svg}" alt="甲骨文·${char}" style="width:100%;height:100%;">`;
+            charDetailChar.textContent = data.char;
+            charDetailPinyin.textContent = data.pinyin;
+            charDetailCategory.textContent = data.category;
+            charDetailStrokes.textContent = data.strokeCount + '画';
+            charDetailMeaning.textContent = data.meaning;
+            charDetailExamples.innerHTML = data.examples.map(ex =>
+                `<span style="background:#8c5e3c;color:#fff;padding:5px 12px;border-radius:15px;font-size:14px;">${ex}</span>`
+            ).join('');
+            charDetailModal.style.display = 'flex';
+            setTimeout(() => charDetailModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+
+            // 尝试从后端获取最新数据（异步更新）
+            API.getOracleChar(Object.keys(localOracleChars).indexOf(char) + 1).then(res => {
+                if (res.success && res.data && res.data.meaning) {
+                    charDetailMeaning.textContent = res.data.meaning;
+                    if (res.data.examples) {
+                        charDetailExamples.innerHTML = res.data.examples.map(ex =>
+                            `<span style="background:#8c5e3c;color:#fff;padding:5px 12px;border-radius:15px;font-size:14px;">${ex}</span>`
+                        ).join('');
+                    }
+                }
+            }).catch(() => {});
+        }
+
+        document.querySelectorAll('.bone-item').forEach(item => {
             item.addEventListener('click', () => {
-                const char = item.textContent;
-                Toast.info(`甲骨文字"${char}"：古代表示"${getCharMeaning(char)}"的象形文字`);
+                const char = item.getAttribute('data-char');
+                showCharDetail(char);
             });
         });
 
-        function getCharMeaning(char) {
-            const meanings = {
-                '日': '太阳',
-                '月': '月亮',
-                '山': '山脉',
-                '水': '水流',
-                '人': '人类',
-                '木': '树木'
-            };
-            return meanings[char] || char;
-        }
+        closeCharModal.addEventListener('click', () => {
+            charDetailModal.classList.remove('active');
+            setTimeout(() => {
+                charDetailModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        });
+
+        charDetailModal.addEventListener('click', (e) => {
+            if (e.target === charDetailModal) {
+                closeCharModal.click();
+            }
+        });
 
         // 点击模态框外部关闭
         window.addEventListener('click', (e) => {

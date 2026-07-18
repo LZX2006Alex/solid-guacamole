@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>甲骨文书写练习</title>
+    <link rel="stylesheet" href="./css/enhance.css">
     <style>
         * {
             margin: 0;
@@ -13,10 +14,14 @@
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background:
+                radial-gradient(circle at 15% 20%, rgba(140, 94, 60, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 40%),
+                linear-gradient(135deg, #f5f1e6 0%, #e8dfca 100%);
+            background-attachment: fixed;
             min-height: 100vh;
             padding: 20px;
-            color: #333;
+            color: #5a3921;
         }
         
         .container {
@@ -27,21 +32,36 @@
         header {
             text-align: center;
             margin-bottom: 30px;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #f5f1e6 0%, #e8dfca 100%);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(140, 94, 60, 0.15);
+            border-top: 4px solid #d4af37;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+        }
+
         h1 {
-            color: #8B4513;
+            color: #8c5e3c;
             font-size: 2.5rem;
             margin-bottom: 10px;
+            letter-spacing: 4px;
+            text-shadow: 1px 1px 3px rgba(212, 175, 55, 0.3);
         }
-        
+
         .subtitle {
-            color: #666;
+            color: #6d4429;
             font-size: 1.2rem;
+            letter-spacing: 1px;
         }
         
         .main-content {
@@ -54,21 +74,23 @@
         .writing-area {
             flex: 1;
             min-width: 300px;
-            background-color: white;
-            border-radius: 10px;
+            background: linear-gradient(135deg, #ffffff 0%, #faf6ec 100%);
+            border-radius: 16px;
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(140, 94, 60, 0.12);
+            border: 1px solid rgba(212, 175, 55, 0.15);
         }
-        
+
         .canvas-container {
             position: relative;
             width: 100%;
             height: 400px;
-            border: 2px dashed #8B4513;
-            border-radius: 8px;
+            border: 2px dashed #8c5e3c;
+            border-radius: 12px;
             margin-bottom: 20px;
-            background-color: #f9f3e9;
+            background: linear-gradient(135deg, #faf3e0 0%, #f5e6c8 100%);
             overflow: hidden;
+            box-shadow: inset 0 2px 12px rgba(140, 94, 60, 0.2);
         }
         
         #writingCanvas {
@@ -100,35 +122,45 @@
             justify-content: space-between;
             margin-bottom: 15px;
         }  button {
-            padding: 10px 15px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 5px;
-            background-color: #8B4513;
-            color: white;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            color: #5a3921;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+            letter-spacing: 1px;
         }
-        
+
         button:hover {
-            background-color: #A0522D;
+            background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
             transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(212, 175, 55, 0.45);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
         
         .template-area {
             flex: 1;
             min-width: 300px;
-            background-color: white;
-            border-radius: 10px;
+            background: linear-gradient(135deg, #ffffff 0%, #faf6ec 100%);
+            border-radius: 16px;
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(140, 94, 60, 0.12);
+            border: 1px solid rgba(212, 175, 55, 0.15);
         }
-        
+
         .template-title {
             font-size: 1.5rem;
-            color: #8B4513;
+            color: #8c5e3c;
             margin-bottom: 15px;
             text-align: center;
+            letter-spacing: 2px;
         } .character-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -138,53 +170,77 @@
         
         .character-item {
             background-color: #f9f3e9;
-            border: 1px solid #8B4513;
-            border-radius: 8px;
+            border: 2px solid #8c5e3c;
+            border-radius: 12px;
             padding: 15px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
+            box-shadow: 0 2px 6px rgba(140, 94, 60, 0.1);
         }
-        
+
         .character-item:hover {
             background-color: #e6d5c3;
             transform: scale(1.05);
+            border-color: #d4af37;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
         }
-        
+
+        .character-item.selected {
+            border-color: #d4af37;
+            background: linear-gradient(135deg, #f5e6c8 0%, #e8dfca 100%);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.35), 0 4px 12px rgba(212, 175, 55, 0.25);
+        }
+
         .character-info {
-            background-color: #f9f3e9;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #f9f3e9 0%, #f5e6c8 100%);
+            border-radius: 12px;
             padding: 15px;
             margin-top: 15px;
+            border-left: 4px solid #d4af37;
         }
-        
+
         .character-name {
             font-size: 1.3rem;
-            color: #8B4513;
+            color: #8c5e3c;
             margin-bottom: 10px;
+            font-weight: 600;
         }
-        
+
         .character-meaning {
-            color: #666;
+            color: #6d4429;
             line-height: 1.5;
+        }
+
+        .feedback {
+            background: linear-gradient(135deg, #f9f3e9 0%, #f5e6c8 100%);
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-top: 15px;
+            color: #6d4429;
+            border-left: 3px solid #d4af37;
+            font-size: 0.95rem;
         }
         
         .instructions {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #ffffff 0%, #faf6ec 100%);
+            border-radius: 16px;
+            padding: 25px 20px;
+            box-shadow: 0 8px 25px rgba(140, 94, 60, 0.12);
+            border: 1px solid rgba(212, 175, 55, 0.15);
             margin-bottom: 30px;
+            border-left: 4px solid #d4af37;
         }
-        
+
         .instructions h2 {
-            color: #8B4513;
+            color: #8c5e3c;
             margin-bottom: 15px;
+            letter-spacing: 2px;
         }
         
         .instructions ol {
@@ -198,9 +254,14 @@
         
         footer {
             text-align: center;
-            padding: 20px;
-            color: #666;
+            padding: 25px 20px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #5a3921 0%, #3d2817 100%);
+            color: #d4c6b0;
             font-size: 0.9rem;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(92, 61, 46, 0.25);
+            letter-spacing: 1px;
         }
 
         /* 甲骨文图形样式 - 从第二个文件复制过来 */
@@ -447,6 +508,36 @@
         /* 演示动画的甲骨文样式 */
         .demo-oracle {
             opacity: 0.3;
+        }
+
+        /* 甲骨文SVG图片样式 */
+        .character-item img.oracle-svg-img {
+            width: 50px;
+            height: 50px;
+            filter: sepia(1) hue-rotate(15deg) saturate(2);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+
+        .character-item:hover img.oracle-svg-img {
+            transform: scale(1.1);
+        }
+
+        .character-item.selected img.oracle-svg-img {
+            filter: sepia(1) hue-rotate(15deg) saturate(2.5) brightness(1.1);
+            transform: scale(1.08);
+        }
+
+        .demo-overlay img.oracle-svg-demo {
+            width: 140px;
+            height: 140px;
+            filter: sepia(1) hue-rotate(15deg) saturate(2);
+            opacity: 0.35;
+            user-select: none;
+            -webkit-user-drag: none;
+            pointer-events: none;
         }
 
         .demo-human {
@@ -782,6 +873,86 @@
     </div>
 
     <script>
+        // ===== 甲骨文SVG字典 - 字符对应的SVG文件路径 =====
+        const SVG_DICTIONARY = {
+            '人': './svg/人.svg',
+            '日': './svg/日.svg',
+            '月': './svg/月.svg',
+            '水': './svg/水.svg',
+            '火': './svg/火.svg',
+            '木': './svg/木.svg',
+            '山': './svg/山.svg',
+            '雨': './svg/雨.svg'
+        };
+        // 暴露到全局，供后续脚本（演示按钮）使用
+        window.SVG_DICTIONARY = SVG_DICTIONARY;
+
+        // 创建甲骨文SVG img元素
+        function createOracleSvg(char, size, isDemo) {
+            const src = SVG_DICTIONARY[char];
+            if (!src) return null;
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = char;
+            img.className = isDemo ? 'oracle-svg-demo' : 'oracle-svg-img';
+            img.style.width = size + 'px';
+            img.style.height = size + 'px';
+            img.style.filter = 'sepia(1) hue-rotate(15deg) saturate(2)';
+            if (isDemo) {
+                img.style.opacity = '0.35';
+                img.style.userSelect = 'none';
+                img.style.webkitUserDrag = 'none';
+                img.style.pointerEvents = 'none';
+            }
+            img.draggable = false;
+            return img;
+        }
+
+        // 更新demo-overlay中的SVG示范
+        function updateDemoOverlay(char) {
+            const demoOverlay = document.getElementById('demoOverlay');
+            if (!demoOverlay || !char || !SVG_DICTIONARY[char]) return;
+            demoOverlay.innerHTML = '';
+            const img = createOracleSvg(char, 140, true);
+            if (img) {
+                demoOverlay.appendChild(img);
+                demoOverlay.style.display = 'flex';
+            }
+        }
+
+        // DOMContentLoaded后：替换字符列表中的甲骨文图形为SVG，并监听点击事件
+        document.addEventListener('DOMContentLoaded', function () {
+            const characterItems = document.querySelectorAll('.character-item');
+            // 遍历字符列表，将原有的CSS甲骨文图形替换为SVG展示
+            characterItems.forEach(function (item) {
+                const char = item.getAttribute('data-char');
+                if (!char || !SVG_DICTIONARY[char]) return;
+                item.innerHTML = '';
+                const img = createOracleSvg(char, 50, false);
+                if (img) {
+                    item.appendChild(img);
+                }
+            });
+
+            // 监听character-item的点击事件，更新demo-overlay中的SVG示范
+            characterItems.forEach(function (item) {
+                item.addEventListener('click', function () {
+                    // 切换选中状态
+                    characterItems.forEach(function (other) {
+                        other.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    const char = this.getAttribute('data-char');
+                    // 使用setTimeout确保在原有click handler（会清空画布并隐藏overlay）之后执行
+                    setTimeout(function () {
+                        updateDemoOverlay(char);
+                    }, 0);
+                });
+            });
+        });
+    </script>
+
+    <script>
         // 获取DOM元素
         const canvas = document.getElementById('writingCanvas');
         const ctx = canvas.getContext('2d');
@@ -880,28 +1051,30 @@
                 feedbackText.textContent = '请先选择一个字符';
                 return;
             }
-            
+
             clearCanvas();
             feedbackText.textContent = '观看演示中...';
-            
-            // 创建对应的甲骨文演示图形
+
+            // 创建对应的甲骨文SVG演示图形
             demoOverlay.innerHTML = '';
             demoOverlay.style.display = 'flex';
-            
-            const demoElement = document.createElement('div');
-            demoElement.className = `demo-oracle demo-${getCharacterClass(currentCharacter)}`;
-            
-            // 为雨字添加雨滴
-            if (currentCharacter === '雨') {
-                demoElement.innerHTML = `
-                    <div class="raindrop"></div>
-                    <div class="raindrop"></div>
-                    <div class="raindrop"></div>
-                `;
+
+            if (window.SVG_DICTIONARY && window.SVG_DICTIONARY[currentCharacter]) {
+                const img = document.createElement('img');
+                img.src = window.SVG_DICTIONARY[currentCharacter];
+                img.alt = currentCharacter;
+                img.className = 'oracle-svg-demo';
+                img.style.width = '140px';
+                img.style.height = '140px';
+                img.style.opacity = '0.35';
+                img.style.filter = 'sepia(1) hue-rotate(15deg) saturate(2)';
+                img.style.userSelect = 'none';
+                img.style.webkitUserDrag = 'none';
+                img.style.pointerEvents = 'none';
+                img.draggable = false;
+                demoOverlay.appendChild(img);
             }
-            
-            demoOverlay.appendChild(demoElement);
-            
+
             setTimeout(() => {
                 feedbackText.textContent = '演示完成，请尝试模仿书写';
             }, 1500);

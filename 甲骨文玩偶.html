@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>甲骨文文创 - 文化传承与创新</title>
     <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/enhance.css">
     <style>
         * {
             margin: 0;
@@ -14,7 +15,8 @@
         }
         
         body {
-            background-color: #f5f1e8;
+            background: linear-gradient(135deg, #f5f1e6 0%, #e8dfca 100%);
+            background-attachment: fixed;
             color: #3c2f2f;
             line-height: 1.6;
         }
@@ -26,13 +28,25 @@
         }
         
         header {
-            background: linear-gradient(to right, #8B4513, #A0522D);
+            background: linear-gradient(135deg, #8a7355 0%, #7a5c3c 100%);
             color: #f5f1e8;
             padding: 30px 0;
             text-align: center;
-            border-bottom: 5px solid #5D4037;
+            border-bottom: 5px solid #d4af37;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 20px rgba(92, 61, 46, 0.25);
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #d4af37 50%, transparent);
+            z-index: 2;
         }
         
         header::before {
@@ -84,13 +98,15 @@
             height: 300px;
             background-color: #d4b896;
             border: 2px solid #8B4513;
-            border-radius: 5px;
+            border-radius: 16px;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 5rem;
             color: #5D4037;
+            box-shadow: 0 10px 28px rgba(92, 61, 46, 0.22);
+            overflow: hidden;
         }
         
         .product-details {
@@ -222,6 +238,76 @@
                 font-size: 2rem;
             }
         }
+
+        /* ===== 美化增强样式 ===== */
+        .product-image, .product-details, .order-form {
+            border: 1px solid rgba(140, 94, 60, 0.18) !important;
+            box-shadow: 0 10px 30px rgba(92, 61, 46, 0.12) !important;
+        }
+
+        .price {
+            color: #dc3545 !important;
+            font-size: 2.4rem !important;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(220, 53, 69, 0.25);
+            background: linear-gradient(135deg, #dc3545 0%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%) !important;
+            color: #5a3921 !important;
+            font-weight: bold;
+            border-radius: 8px !important;
+            box-shadow: 0 5px 18px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease !important;
+            border: none;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%) !important;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(212, 175, 55, 0.55);
+        }
+
+        .quantity-btn {
+            background: linear-gradient(135deg, #8c5e3c 0%, #6d4429 100%) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .quantity-btn:hover {
+            transform: scale(1.12);
+            box-shadow: 0 5px 14px rgba(140, 94, 60, 0.45);
+        }
+
+        /* 甲骨文字符展示区 */
+        .product-oracle, .preview-oracle, .character-display, .oracle-display {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 110px;
+            height: 110px;
+            margin: 15px auto;
+            background: linear-gradient(135deg, #faf3e0 0%, #f5e6c8 100%);
+            border-radius: 50%;
+            border: 3px solid #d4af37;
+            box-shadow: 0 6px 20px rgba(140, 94, 60, 0.25), inset 0 0 15px rgba(212, 175, 55, 0.1);
+            font-size: 2.5rem;
+            color: #5c3d2e;
+            font-family: 'STKaiti', 'KaiTi', serif;
+        }
+
+        .product-oracle img, .preview-oracle img, .character-display img, .oracle-display img {
+            width: 80px;
+            height: 80px;
+        }
+
+        .oracle-pattern {
+            border-radius: 16px;
+        }
     </style>
 </head>
 <body>
@@ -238,6 +324,7 @@
                 <div class="product-img">
                     <img src="./玩偶.jpg" alt="甲骨文玩偶"height=300px width="400px">
                 </div>
+                <div class="product-oracle">水</div>
                 <div class="product-gallery">
                     <p>更多产品图片</p >
                     <!-- 这里可以添加缩略图 -->
@@ -317,6 +404,29 @@
         </div>
     </footer>
 
+    <script>
+        // 甲骨文SVG字典：将文字映射到对应SVG文件
+        const ORACLE_SVG_MAP = {
+            '人': './svg/人.svg',
+            '日': './svg/日.svg',
+            '月': './svg/月.svg',
+            '水': './svg/水.svg',
+            '火': './svg/火.svg',
+            '木': './svg/木.svg',
+            '山': './svg/山.svg',
+            '雨': './svg/雨.svg'
+        };
+        // DOM加载完成后，遍历页面中所有甲骨文展示元素，根据其文本内容匹配并替换为SVG图片
+        document.addEventListener('DOMContentLoaded', function() {
+            const oracleElements = document.querySelectorAll('.product-oracle, .preview-oracle, .character-display, .oracle-display');
+            oracleElements.forEach(function(el) {
+                const text = el.textContent.trim();
+                if (ORACLE_SVG_MAP[text]) {
+                    el.innerHTML = '<img src="' + ORACLE_SVG_MAP[text] + '" alt="' + text + '" style="width:80px;height:80px;filter:sepia(1) hue-rotate(15deg) saturate(2);">';
+                }
+            });
+        });
+    </script>
     <script>
         // 数量选择功能
         document.getElementById('decrease').addEventListener('click', function() {
