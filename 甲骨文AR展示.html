@@ -79,11 +79,9 @@
         .overlay-oracle.is-following {
             transition: left 0.05s ease-out, top 0.05s ease-out;
         }
-
-        .overlay-oracle::before,
-        .overlay-oracle::after {
-            background-color: var(--oc, #5c3d2e);
-            border-color: var(--oc, #5c3d2e);
+        .overlay-oracle img {
+            display: block;
+            pointer-events: none;
         }
 
         .start-overlay {
@@ -401,9 +399,9 @@
 
 <script>
     const chars = ['人', '木', '日', '月', '水', '火', '山', '雨'];
-    const charClasses = {
-        '人': 'demo-human', '木': 'demo-tree', '日': 'demo-sun', '月': 'demo-moon',
-        '水': 'demo-water', '火': 'demo-fire', '山': 'demo-mountain', '雨': 'demo-rain'
+    const charSvgPaths = {
+        '人': './svg/人.svg', '木': './svg/木.svg', '日': './svg/日.svg', '月': './svg/月.svg',
+        '水': './svg/水.svg', '火': './svg/火.svg', '山': './svg/山.svg', '雨': './svg/雨.svg'
     };
 
     const video = document.getElementById('video');
@@ -434,7 +432,7 @@
             const item = document.createElement('div');
             item.className = 'char-item' + (i === 0 ? ' active' : '');
             item.innerHTML = `
-                <div class="char-preview ${charClasses[char]}"></div>
+                <img class="char-preview" src="${charSvgPaths[char]}" alt="${char}" style="width:50px;height:50px;filter:sepia(1) hue-rotate(15deg) saturate(2);">
                 <span class="char-label">${char}</span>
             `;
             item.addEventListener('click', () => selectChar(char, item));
@@ -444,10 +442,22 @@
 
     function selectChar(char, el) {
         currentChar = char;
-        overlay.className = 'overlay-oracle ' + charClasses[char];
+        updateOverlaySvg();
         if (isFollowing) overlay.classList.add('is-following');
         document.querySelectorAll('.char-item').forEach(i => i.classList.remove('active'));
         el.classList.add('active');
+    }
+
+    function updateOverlaySvg() {
+        const svgPath = charSvgPaths[currentChar];
+        if (svgPath) {
+            overlay.innerHTML = `<img src="${svgPath}" alt="${currentChar}" style="width:${oracleSize}px;height:auto;opacity:${oracleOpacity};filter:sepia(1) hue-rotate(${getHueRotate(oracleColor)})deg saturate(2);">`;
+        }
+    }
+
+    function getHueRotate(color) {
+        const colorMap = { '#5c3d2e': 15, '#8B4513': 10, '#1a1a1a': 0, '#c0392b': 320, '#2c7a3a': 120 };
+        return colorMap[color] || 15;
     }
 
     async function startCamera() {
@@ -508,20 +518,18 @@
     function updateSize() {
         oracleSize = parseInt(sizeSlider.value);
         sizeValue.textContent = oracleSize + 'px';
-        const scale = oracleSize / 120;
-        overlay.style.setProperty('--scale', scale);
-        overlay.style.transform = `translate(-50%, -50%) scale(${scale})`;
+        updateOverlaySvg();
     }
 
     function updateOpacity() {
         oracleOpacity = parseInt(opacitySlider.value) / 100;
         opacityValue.textContent = oracleOpacity.toFixed(2);
-        overlay.style.opacity = oracleOpacity;
+        updateOverlaySvg();
     }
 
     function updateColor(color) {
         oracleColor = color;
-        overlay.style.setProperty('--oc', color);
+        updateOverlaySvg();
     }
 
     function drawDemoChar(ctx, char, x, y, size, color) {
@@ -683,7 +691,8 @@
     }, { passive: false });
 
     initCharGrid();
-    overlay.className = 'overlay-oracle demo-human is-following';
+    updateOverlaySvg();
+    overlay.classList.add('is-following');
     updateSize();
     updateOpacity();
     updateColor(oracleColor);
